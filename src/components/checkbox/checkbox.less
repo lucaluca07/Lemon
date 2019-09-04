@@ -1,0 +1,30 @@
+.t-checkbox{
+  .t-input{
+    display: none;
+  }
+  .t-checkbox-inner{
+    height: 14px;
+    width: 14px;
+    border: 1px solid #999;
+    display: inline-block;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+}
+.t-checkbox:not(.t-checkbox-disabled){
+  &:hover {
+    .t-checkbox-inner{
+      border-color: blueviolet;
+    }
+  }
+}
+.t-checkbox-checked {
+  .t-checkbox-inner{
+    background: red;
+  }
+}
+.t-checkbox-disabled {
+  .t-checkbox-inner{
+    background: #eee;
+  }
+}

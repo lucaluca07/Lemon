@@ -1,0 +1,10 @@
+node_modules/
+dist/
+es/
+lib/
+.docz/
+.idea/
+.vscode/
+.DS_Store/
+.idea/vcs.xml
+.DS_Store

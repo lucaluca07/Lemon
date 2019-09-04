@@ -1,0 +1,23 @@
+.tab-bar{
+  position: relative;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+
+  &-list{
+    display: flex;
+    padding: 0;
+  }
+
+  &-item{
+    padding: 12px 16px;
+    margin-right: 5px;
+  }
+
+  &-inner{
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: red;
+    transition: left .3s;
+  }
+}
