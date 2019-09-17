@@ -9,6 +9,7 @@ export interface TabsProps {
   children: React.ReactNode[];
   activeKey?: string;
   defaultActiveKey?: string;
+  style?: React.CSSProperties;
   onChange?: (key:  string) => void;
   renderTabBar?: () => React.ReactElement<any>;
   renderTabContent?: () => React.ReactElement<any>;
@@ -137,7 +138,7 @@ export default class Tabs extends React.Component<TabsProps, TabsState> {
     return [tabBar, tabContent];
   };
 
-  public render() {
-    return <div className="tabs">{this.renderContent()}</div>;
+  render() {
+    return <div className="tabs" style={this.props.style}>{this.renderContent()}</div>;
   }
 }
