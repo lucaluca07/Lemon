@@ -5,9 +5,6 @@ import Layout from './components/layout';
 import './assets/style/normalize.less';
 import './assets/style/index.less';
 
-import { applyMiddleware, createStore, compose } from 'redux';
-import {  Provider } from 'react-redux';
-
 export default class App extends Component{
 
   public render() {

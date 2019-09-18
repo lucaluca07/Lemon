@@ -22,7 +22,7 @@ export default class Slider extends React.Component {
     const today = (new Date()).getDate();
     return (
       <>
-        <Menu style={{ padding: '5px 10px' }}>
+        <Menu style={{ margin: '4px 8px' }}>
           <MenuItem>
             <Item icon={`calendar-${today}`} name="今天" />
           </MenuItem>
@@ -32,7 +32,7 @@ export default class Slider extends React.Component {
             </MenuItem>
           ))}
         </Menu>
-        <Menu style={{ margin: '10px 10px 0px' }}>
+        <Menu style={{ margin: '8px 8px 0' }}>
           {list2.map(i => (
             <MenuItem key={i.name}>
               <Item icon={i.icon} name={i.name} />

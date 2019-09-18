@@ -39,7 +39,7 @@ const Layout: React.SFC<LayoutProps> = ({
             setVisible(true);
           }}
         >
-          显示
+          显
         </div>
         <div className="l-layout-header-inner">
           {header}

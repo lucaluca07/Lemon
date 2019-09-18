@@ -8,12 +8,14 @@
   background-color: #fafafa;
   &-header {
     display: flex;
-    padding: 10px 0;
+    padding: 16px 0;
     background-color: #282b35;
     color: #fff;
     &-inner {
       margin: 0 auto;
+      padding-left: 8px;
       width: @max-width;
+      box-sizing: border-box;
     }
   }
 
@@ -30,10 +32,11 @@
 
   &-main {
     background-color: #fff;
-    height: calc(100% - 20px);
-    padding: 10px;
+    height: 100%;
+    padding: 16px;
     margin-left: @aside-width;
     width: @max-width - @aside-width;
+    box-sizing: border-box;
   }
 
   &-aside {
@@ -61,7 +64,7 @@
 
     ::-webkit-scrollbar-thumb {
       background: #bfbfbf;
-      border-radius: 10px;
+      border-radius: 8px;
     }
   }
 
@@ -73,6 +76,15 @@
     left: 0;
     right: 0;
     z-index: 1;
+  }
+
+  @media (max-width: 900px) {
+    &-article {
+      width: 100%;
+    }
+    &-main {
+      width: calc(100% - @aside-width);
+    }
   }
 
   @media (max-width: 768px) {
