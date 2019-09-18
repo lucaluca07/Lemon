@@ -14,7 +14,7 @@ const list1 = [
 
 const list2 = [
   { name: '时间轴', icon: 'timeline' },
-  { name: '废纸篓', icon: 'lajitong' },
+  { name: '废纸篓', icon: 'dustbin' },
 ];
 
 export default class Slider extends React.Component {
