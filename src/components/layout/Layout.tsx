@@ -33,16 +33,16 @@ const Layout: React.SFC<LayoutProps> = ({
   return (
     <div className={classString} style={style}>
       <header className="l-layout-header">
-        <div
-          className="l-layout-visible-btn"
-          onClick={() => {
-            setVisible(true);
-          }}
-        >
-          显
-        </div>
         <div className="l-layout-header-inner">
-          {header}
+          <div
+            className="l-layout-visible-btn"
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            显
+          </div>
+          <div className="l-layout-header-content">{header}</div>
         </div>
       </header>
       <article className="l-layout-article">

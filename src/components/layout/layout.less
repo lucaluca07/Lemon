@@ -7,20 +7,25 @@
   flex-direction: column;
   background-color: #fafafa;
   &-header {
-    display: flex;
-    padding: 16px 0;
+    padding: 4px 0;
     background-color: #282b35;
     color: #fff;
     &-inner {
+      display: flex;
       margin: 0 auto;
       padding-left: 8px;
       width: @max-width;
       box-sizing: border-box;
+      position: relative;
+    }
+    &-content {
+      flex: 1;
     }
   }
 
   &-visible-btn {
     display: none;
+    width: 50px;
   }
 
   &-article {
