@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import Icon from '../icon';
 
 import './checkbox.less';
 
@@ -49,7 +50,7 @@ const CheckBox: React.SFC<CheckBoxProps> = ({
   return (
     <label className={classString}>
       <input className="t-input" onClick={() => { setChecked(!_checked); }} checked={!!_checked} value={value} type="checkbox"/>
-      <span className="t-checkbox-inner" />
+      <Icon className="t-checkbox-inner" type={_checked ? 'checked' : 'unchecked'}/>
       {children !== undefined && <span>{children}</span>}
     </label>
   );

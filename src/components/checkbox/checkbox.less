@@ -3,28 +3,24 @@
     display: none;
   }
   .t-checkbox-inner{
-    height: 16px;
-    width: 16px;
-    border: 1px solid #999;
-    display: inline-block;
-    border-radius: 2px;
-    overflow: hidden;
+    font-size: 14px;
+    margin-right: 5px;
   }
 }
 .t-checkbox:not(.t-checkbox-disabled){
   &:hover {
     .t-checkbox-inner{
-      border-color: blueviolet;
+      color: red;
     }
   }
 }
 .t-checkbox-checked {
   .t-checkbox-inner{
-    background: red;
+    color: #999;
   }
 }
 .t-checkbox-disabled {
   .t-checkbox-inner{
-    background: #eee;
+    color: #eee;
   }
 }

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import Slider from './containers/slider';
 import Layout from './components/layout';
+import Slider from './containers/slider';
+import Header from './containers/header';
+import Main from './containers/main';
 
 import './assets/style/normalize.less';
 import './assets/style/index.less';
 
-export default class App extends Component{
-
+export default class App extends Component {
   public render() {
     return (
       <Layout
         aside={<Slider />}
-        header={"标题"}
-        main={<div>内容</div>}
+        header={<Header />}
+        main={<Main />}
       />
     );
   }
