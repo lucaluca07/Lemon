@@ -22,7 +22,7 @@ export default class Slider extends React.Component {
     const today = (new Date()).getDate();
     return (
       <>
-        <Menu style={{ margin: '4px 8px' }}>
+        <Menu style={{ margin: '16px 8px 4px' }}>
           <MenuItem>
             <Item icon={`calendar-${today}`} name="今天" />
           </MenuItem>
