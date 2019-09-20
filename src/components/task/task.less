@@ -1,12 +1,39 @@
 .l-task {
   font-size: 14px;
+  padding: 10px 32px 10px 16px;
+  margin: 2px 0;
+  border-radius: 4px;
+  position: relative;
+  border-bottom: 1px solid #eee;
+  &-drag {
+    position: absolute;
+    left: 1px;
+    top: 12px;
+    font-size: 12px;
+    display: none;
+  }
+  &-more {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    display: none;
+    color: #666
+  }
+
   &-content {
     display: flex;
     align-items: center;
-
   }
 
   &-title {
     margin-left: 10px;
+    flex: 1;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    .l-task-drag, .l-task-more {
+      display: block;
+    }
   }
 }
