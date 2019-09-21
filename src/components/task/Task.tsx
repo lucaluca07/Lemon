@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import CheckBox from '../checkbox';
+import Editor from '../editor';
 import Icon from '../icon';
 import './task.less';
 
@@ -18,6 +19,7 @@ export default class Task extends React.Component {
           <span className="l-task-todo"></span>
           <span className="l-task-date"></span>
         </div>
+        <Editor />
         <Icon className="l-task-more" type="more"/>
       </li>
     )

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import Icon from '../icon';
+import TextArea from './TextArea';
 import './input.less';
 
 export interface InputProps
@@ -13,12 +14,15 @@ export interface InputProps
 }
 
 export default class Input extends React.Component<InputProps, any> {
+  static TextArea: typeof TextArea;
+
   input: HTMLInputElement;
 
   constructor(props: InputProps) {
     super(props);
     const value =
       typeof props.value === 'undefined' ? props.defaultValue : props.value;
+    console.log(1111, value);
     this.state = {
       value,
     };
@@ -118,6 +122,7 @@ export default class Input extends React.Component<InputProps, any> {
             onChange={this.handleChange}
             placeholder={placeholder}
             ref={this.saveInput}
+            value={value}
           />
           {allowClear && !disabled && value && (
             <Icon onClick={this.handleReset} type="close" />

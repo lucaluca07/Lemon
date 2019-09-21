@@ -13,21 +13,10 @@ export interface CheckBoxProps {
   disabled?: boolean;
   autoFocus?: boolean;
   style?: React.CSSProperties;
-  onChange?: (e: CheckboxChangeEvent) => void;
+  onChange?: (checked: boolean) => void;
   onClick?: React.MouseEventHandler<HTMLElement>;
   onKeyDown?: React.MouseEventHandler<HTMLElement>;
   onKeyPress?: React.MouseEventHandler<HTMLElement>;
-}
-
-export interface CheckboxChangeEventTarget extends CheckBoxProps {
-  checked: boolean;
-}
-
-export interface CheckboxChangeEvent {
-  target: CheckboxChangeEventTarget;
-  stopPropagation: () => void;
-  preventDefault: () => void;
-  nativeEvent: MouseEvent;
 }
 
 const CheckBox: React.SFC<CheckBoxProps> = ({
@@ -36,21 +25,36 @@ const CheckBox: React.SFC<CheckBoxProps> = ({
   checked,
   defaultChecked = false,
   children,
-  disabled
+  disabled,
+  onChange,
 }) => {
   const [_checked, setChecked] = React.useState<boolean>(
-    checked === undefined ? defaultChecked : checked
+    checked === undefined ? defaultChecked : checked,
   );
 
   const classString = classnames(className, 't-checkbox', {
     't-checkbox-disabled': disabled,
-    't-checkbox-checked': _checked
+    't-checkbox-checked': _checked,
   });
 
   return (
     <label className={classString}>
-      <input className="t-input" onClick={() => { setChecked(!_checked); }} checked={!!_checked} value={value} type="checkbox"/>
-      <Icon className="t-checkbox-inner" type={_checked ? 'checked' : 'unchecked'}/>
+      <input
+        className="t-input"
+        onChange={e => {
+          if (onChange) onChange(e.target.checked);
+        }}
+        onClick={() => {
+          setChecked(!_checked);
+        }}
+        checked={!!_checked}
+        value={value}
+        type="checkbox"
+      />
+      <Icon
+        className="t-checkbox-inner"
+        type={_checked ? 'checked' : 'unchecked'}
+      />
       {children !== undefined && <span>{children}</span>}
     </label>
   );
@@ -67,7 +71,7 @@ CheckBox.propTypes = {
   onChange: PropTypes.func,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
-  onKeyPress: PropTypes.func
+  onKeyPress: PropTypes.func,
 };
 
 export default CheckBox;
