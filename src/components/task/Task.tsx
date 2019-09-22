@@ -5,7 +5,22 @@ import Editor from '../editor';
 import Icon from '../icon';
 import './task.less';
 
-export default class Task extends React.Component {
+export interface TaskProps {
+  edit?: boolean;
+}
+
+export interface TaskState {
+  isEdit?: boolean;
+}
+
+export default class Task extends React.Component<TaskProps, TaskState> {
+  constructor(props: TaskProps) {
+    super(props);
+    const isEdit = props.edit || false;
+    this.state = {
+      isEdit,
+    }
+  }
   render() {
     return (
       <li className="l-task">
