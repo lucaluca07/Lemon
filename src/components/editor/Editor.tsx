@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classnames from 'classnames';
 import CheckBox from '../checkbox';
 import Input from '../input';
 import './editor.less';
@@ -24,7 +23,7 @@ export default class Task extends React.Component {
           <CheckBox />
           <Input value="123" ref={this.saveInput} placeholder="新增任务" className="l-editor-input" />
         </div>
-        <TextArea autosize placeholder="备注" style={{resize: 'none'}}/>
+        <TextArea autosize placeholder="备注" style={{resize: 'none', border: 'none', boxShadow: 'none', marginLeft: 14 }}/>
       </div>
     )
   }

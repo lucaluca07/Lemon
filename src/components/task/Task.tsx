@@ -19,24 +19,29 @@ export default class Task extends React.Component<TaskProps, TaskState> {
     const isEdit = props.edit || false;
     this.state = {
       isEdit,
-    }
+    };
   }
   render() {
+    const { isEdit } = this.state;
+
     return (
       <li className="l-task">
-        <Icon className="l-task-drag" type="drag"/>
-        <div className="l-task-content">
-          <CheckBox />
-          <span className="l-task-title">
-            测试一下
-          </span>
-          <span className="l-task-tags"></span>
-          <span className="l-task-todo"></span>
-          <span className="l-task-date"></span>
-        </div>
-        <Editor />
-        <Icon className="l-task-more" type="more"/>
+        {!isEdit && (
+          <div className="l-task-inner">
+            <Icon className="l-task-drag" type="drag" />
+            <div className="l-task-content">
+              <CheckBox />
+              <span className="l-task-title">测试一下</span>
+              <span className="l-task-tags" />
+              <span className="l-task-todo" />
+              <span className="l-task-date" />
+            </div>
+            <Icon className="l-task-more" type="more" />
+          </div>
+        )}
+
+        {isEdit && <Editor />}
       </li>
-    )
+    );
   }
 }

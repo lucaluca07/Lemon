@@ -1,10 +1,19 @@
 .l-task {
   font-size: 14px;
-  padding: 10px 32px 10px 16px;
   margin: 2px 0;
-  border-radius: 4px;
-  position: relative;
   border-bottom: 1px solid #eee;
+  &-inner {
+    position: relative;
+    padding: 10px 32px 10px 16px;
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      .l-task-drag, .l-task-more {
+        display: block;
+      }
+    }
+  }
   &-drag {
     position: absolute;
     left: 1px;
@@ -28,12 +37,5 @@
   &-title {
     margin-left: 10px;
     flex: 1;
-  }
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.1);
-    .l-task-drag, .l-task-more {
-      display: block;
-    }
   }
 }
