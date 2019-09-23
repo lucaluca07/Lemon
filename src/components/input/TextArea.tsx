@@ -21,6 +21,10 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     resizing: false,
   };
 
+  static defaultProps = {
+    autosize: false,
+  }
+
   componentDidMount() {
     this.resizeTextarea();
   }
@@ -108,6 +112,7 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
       className,
       ...otherProps
     } = this.props;
+    otherProps.autosize = void 0;
     const { textAreaStyles, resizing } = this.state;
     const classString = classnames('l-textarea', className);
 
