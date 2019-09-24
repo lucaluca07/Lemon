@@ -1,7 +1,7 @@
 {
-  "name": "todo-web",
+  "name": "lemon todo",
   "version": "1.0.0",
-  "description": "todo web client",
+  "description": "lemon todo",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
@@ -11,7 +11,7 @@
   "keywords": [
     "todo"
   ],
-  "author": "wensan",
+  "author": "lemon",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
