@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Task from '../../components/task';
+import Calendar from '../../components/calendar';
 
 export default class Tasks extends React.Component {
   render() {
@@ -7,6 +8,7 @@ export default class Tasks extends React.Component {
       <>
         <Task />
         <Task edit/>
+        <Calendar />
       </>
     )
   }
