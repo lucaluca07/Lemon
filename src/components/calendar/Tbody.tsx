@@ -64,6 +64,8 @@ export default class Calendar extends React.Component {
           beforeMonth !== currentMonth && item.month() === beforeMonth,
         'l-calendar-table-next-cell':
           afterMonth !== currentMonth && item.month() === afterMonth,
+        'l-calendar-table-current-day-cell':
+          currentMonth === item.month() && item.date() === current.date(),
         'l-calendar-table-first-day-of-month':
           item.date() === item.startOf('month').date(),
         'l-calendar-table-last-day-of-month':
@@ -74,14 +76,14 @@ export default class Calendar extends React.Component {
       return (
         <tr key={index}>
           {el.map(item => {
-            const currentString = item.format('YYYY-MM-DD');
+            const currentString = item.format('YYYY年MM月DD日');
             return (
               <td
                 className={className(item)}
                 title={currentString}
                 key={currentString}
               >
-                {item.date()}
+                {item.format('DD')}
               </td>
             );
           })}
