@@ -4,7 +4,11 @@ import day from 'dayjs';
 
 import './tbody.less';
 
-export default class Calendar extends React.Component {
+export interface TBodyProps {
+  fullscreen?: boolean;
+}
+
+export default class TBody extends React.Component<TBodyProps> {
   componentDidMount() {
     console.log(
       day()
@@ -83,7 +87,7 @@ export default class Calendar extends React.Component {
                 title={currentString}
                 key={currentString}
               >
-                {item.format('DD')}
+                <span className="l-calendar-table-cell-value">{item.format('DD')}</span>
               </td>
             );
           })}
