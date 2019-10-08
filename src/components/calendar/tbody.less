@@ -3,21 +3,32 @@
 }
 .l-calendar-table{
   width: 100%;
-
-  &-cell {
-
+}
+.l-calendar-cell {
+  text-align: center;
+  .l-calendar-date {
     text-align: center;
-
+    transition: all .3s;
   }
-  &-cell-value {
-    height: 24px;
-    width: 24px;
-    display: block;
-    margin: 0 auto;
-    line-height: 24px;
+}
+.l-calendar-cell-selected {
+  .l-calendar-cell-value {
+    background: red;
+    color: white;
     &:hover {
-      background: #e6f7ff;
-      cursor: pointer;
+      background: red;
     }
+  }
+}
+.l-calendar-cell-value {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  border-radius: 2px;
+  display: block;
+  margin: 0 auto;
+  line-height: 24px;
+  &:hover {
+    background: #e6f7ff;
   }
 }

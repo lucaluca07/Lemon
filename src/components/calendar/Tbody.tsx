@@ -6,38 +6,32 @@ import './tbody.less';
 
 export interface TBodyProps {
   fullscreen?: boolean;
+  current: day.Dayjs;
+  onClick: (day: day.Dayjs) => void;
 }
 
 export default class TBody extends React.Component<TBodyProps> {
   componentDidMount() {
-    console.log(
-      day()
-        .startOf('month')
-        .date(),
-    );
-    console.log(
-      day()
-        .endOf('month')
-        .date(),
-    );
+
+  }
+
+  handleClick = (day: day.Dayjs) => {
+    const { onClick } = this.props;
+    if(onClick) onClick(day);
   }
 
   renderDays() {
     const days: day.Dayjs[] = [];
-    const current = day();
-    const currentMonth: number = current.month();
+    const current = this.props.current;
     const currentStart: day.Dayjs = current.startOf('month');
     const currentEnd: day.Dayjs = current.endOf('month');
+    const start = currentStart.startOf('week');
+    const end = currentEnd.endOf('week');
 
-    const before = currentStart.startOf('week');
-    const after = currentEnd.endOf('week');
-
-    const beforeMonth = before.month();
-    if (beforeMonth !== currentMonth) {
-      const beforeEnd = before.endOf('month');
-      const length = beforeEnd.diff(before, 'day');
+    if (!current.isSame(start, 'month')) {
+      const length = start.endOf('month').diff(start, 'day');
       for (let i = 0; i <= length; i++) {
-        days.push(before.add(i, 'day'));
+        days.push(start.add(i, 'day'));
       }
     }
 
@@ -47,13 +41,10 @@ export default class TBody extends React.Component<TBodyProps> {
       days.push(currentStart.add(i, 'day'));
     }
 
-    const afterMonth = after.month();
-
-    if (afterMonth !== currentMonth) {
-      const afterStart = after.startOf('month');
-      const length = after.diff(afterStart, 'day');
-      for (let i = 0; i <= length; i++) {
-        days.push(afterStart.add(i, 'day'));
+    if (!current.isSame(end, 'month')) {
+      const length = end.diff(end.startOf('month'), 'day');
+      for (let i = length; i >= 0; i--) {
+        days.push(end.subtract(i, 'day'));
       }
     }
 
@@ -63,17 +54,13 @@ export default class TBody extends React.Component<TBodyProps> {
     }
 
     const className = (item: day.Dayjs) => {
-      return classnames('l-calendar-table-cell', {
-        'l-calendar-table-prev-cell':
-          beforeMonth !== currentMonth && item.month() === beforeMonth,
-        'l-calendar-table-next-cell':
-          afterMonth !== currentMonth && item.month() === afterMonth,
-        'l-calendar-table-current-day-cell':
-          currentMonth === item.month() && item.date() === current.date(),
-        'l-calendar-table-first-day-of-month':
-          item.date() === item.startOf('month').date(),
-        'l-calendar-table-last-day-of-month':
-          item.date() === item.endOf('month').date(),
+      console.log(item.isSame(current, 'day'), item.date(), 'day')
+      return classnames('l-calendar-cell', {
+        'l-calendar-prev-cell': item.isBefore(current, 'month'),
+        'l-calendar-next-cell': item.isAfter(current, 'month'),
+        'l-calendar-current-day-cell': item.isSame(current),
+        'l-calendar-first-day-of-month': item.startOf('month').isSame(item),
+        'l-calendar-last-day-of-month': item.endOf('month').isSame(item),
       });
     };
     return arr.map((el, index) => {
@@ -87,7 +74,9 @@ export default class TBody extends React.Component<TBodyProps> {
                 title={currentString}
                 key={currentString}
               >
-                <span className="l-calendar-table-cell-value">{item.format('DD')}</span>
+                <div className="l-calendar-date" onClick={() => this.handleClick(item)}>
+                  <span className="l-calendar-cell-value">{item.format('DD')}</span>
+                </div>
               </td>
             );
           })}
@@ -102,7 +91,7 @@ export default class TBody extends React.Component<TBodyProps> {
         <thead>
           <tr>
             {['日', '一', '二', '三', '四', '五', '六'].map(el => (
-              <th className="l-calendar-table-header" title={`周${el}`}>
+              <th key={el} className="l-calendar-table-header" title={`周${el}`}>
                 <span>{el}</span>
               </th>
             ))}

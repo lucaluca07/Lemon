@@ -15,17 +15,24 @@ export default class Calendar extends React.Component<CalendarProps>{
     fullscreen: true,
   }
 
+  state = {
+    current: day(),
+  }
+
   componentDidMount() {
-    console.log(day().startOf('month').date());
-    console.log(day().endOf('month').date());
+  }
+
+  handleClick = (day: day.Dayjs) => {
+    this.setState({ current: day });
   }
 
   render() {
     const { fullscreen } = this.props;
+    const { current } = this.state;
     const classString = classnames('l-calendar', {'l-calendar-fullscreen' : fullscreen})
     return (
-      <div className="l-calendar">
-        <TBody/>
+      <div className={classString}>
+        <TBody current={current} onClick={this.handleClick}/>
       </div>
     )
   }
