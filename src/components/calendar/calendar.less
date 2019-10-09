@@ -1,3 +1,17 @@
 .l-calendar {
   font-size: 14px;
+  &-header {
+    display: flex;
+    text-align: center;
+  }
+  &-date{
+    flex: 1;
+  }
+  &-year, &-month {
+    padding: 0 2px;
+
+    &:hover {
+      color: red;
+    }
+  }
 }

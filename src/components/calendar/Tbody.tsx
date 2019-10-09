@@ -58,9 +58,9 @@ export default class TBody extends React.Component<TBodyProps> {
       return classnames('l-calendar-cell', {
         'l-calendar-prev-cell': item.isBefore(current, 'month'),
         'l-calendar-next-cell': item.isAfter(current, 'month'),
-        'l-calendar-current-day-cell': item.isSame(current),
-        'l-calendar-first-day-of-month': item.startOf('month').isSame(item),
-        'l-calendar-last-day-of-month': item.endOf('month').isSame(item),
+        'l-calendar-cell-selected': item.isSame(current, 'day'),
+        'l-calendar-first-day-of-month': item.startOf('month').isSame(item, 'day'),
+        'l-calendar-last-day-of-month': item.endOf('month').isSame(item, 'day'),
       });
     };
     return arr.map((el, index) => {

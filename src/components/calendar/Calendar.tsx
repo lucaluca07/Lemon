@@ -19,11 +19,18 @@ export default class Calendar extends React.Component<CalendarProps>{
     current: day(),
   }
 
-  componentDidMount() {
+  handleSetCurrent = (day: day.Dayjs) => {
+    this.setState({ current: day });
   }
 
-  handleClick = (day: day.Dayjs) => {
-    this.setState({ current: day });
+  handleClickPrevMonth = () => {
+    const { current } = this.state;
+    this.handleSetCurrent(current.subtract(1, 'month'))
+  }
+
+  handleClickNextMonth = () => {
+    const { current } = this.state;
+    this.handleSetCurrent(current.add(1, 'month'))
   }
 
   render() {
@@ -32,7 +39,15 @@ export default class Calendar extends React.Component<CalendarProps>{
     const classString = classnames('l-calendar', {'l-calendar-fullscreen' : fullscreen})
     return (
       <div className={classString}>
-        <TBody current={current} onClick={this.handleClick}/>
+        <header className="l-calendar-header">
+          <span className="l-calendar-prev-month" onClick={this.handleClickPrevMonth}>上个月</span>
+          <span className="l-calendar-date">
+            <span className="l-calendar-year">{current.year()}年</span>
+            <span className="l-calendar-month">{current.month() + 1}月</span>
+          </span>
+          <span className="l-calendar-next-month" onClick={this.handleClickNextMonth}>下个月</span>
+        </header>
+        <TBody current={current} onClick={this.handleSetCurrent}/>
       </div>
     )
   }
