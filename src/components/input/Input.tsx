@@ -1,7 +1,9 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
 import Icon from '../icon';
 import TextArea from './TextArea';
+
+import { keyCodes } from '../../utils/contants';
 import './input.less';
 
 export interface InputProps
@@ -14,37 +16,36 @@ export interface InputProps
 }
 
 export default class Input extends React.Component<InputProps, any> {
-  static TextArea: typeof TextArea;
+  public static TextArea: typeof TextArea;
 
-  input: HTMLInputElement;
+  private input: HTMLInputElement;
 
-  constructor(props: InputProps) {
+  public constructor(props: InputProps) {
     super(props);
     const value =
       typeof props.value === 'undefined' ? props.defaultValue : props.value;
-    console.log(1111, value);
     this.state = {
-      value,
+      value
     };
   }
 
-  static getDerivedStateFromProps(nextProps: InputProps) {
+  public static getDerivedStateFromProps(nextProps: InputProps) {
     if ('value' in nextProps) {
       return {
-        value: nextProps.value,
+        value: nextProps.value
       };
     }
     return null;
   }
 
-  saveInput = (node: HTMLInputElement) => {
+  private saveInput = (node: HTMLInputElement) => {
     this.input = node;
-  };
+  }
 
-  setValue(
+  private setValue(
     value: string,
     e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLElement, MouseEvent>,
-    callback?: () => void,
+    callback?: () => void
   ) {
     if (!('value' in this.props)) {
       this.setState({ value }, callback);
@@ -69,35 +70,35 @@ export default class Input extends React.Component<InputProps, any> {
     }
   }
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  private handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
-    if (e.keyCode === 13 && onPressEnter) {
+    if (e.keyCode === keyCodes.enterKeyCode && onPressEnter) {
       onPressEnter(e);
     }
     if (onKeyDown) {
       onKeyDown(e);
     }
-  };
+  }
 
-  handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     this.setValue('', e, () => {
       this.focus();
     });
-  };
+  }
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setValue(e.target.value, e);
-  };
+  }
 
   public focus = () => {
     this.input.focus();
-  };
+  }
 
   public blur = () => {
     this.input.blur();
-  };
+  }
 
-  render() {
+  public render() {
     const {
       icon,
       allowClear,
@@ -106,7 +107,7 @@ export default class Input extends React.Component<InputProps, any> {
       disabled,
       style,
       placeholder,
-      className,
+      className
     } = this.props;
     const { value } = this.state;
     const classString = classnames('l-input-root', className);

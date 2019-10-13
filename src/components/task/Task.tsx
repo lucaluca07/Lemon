@@ -1,8 +1,10 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
 import CheckBox from '../checkbox';
 import Editor from '../editor';
 import Icon from '../icon';
+
+import { keyCodes } from '../../utils/contants';
 import './task.less';
 
 export interface TaskProps {
@@ -14,55 +16,54 @@ export interface TaskState {
 }
 
 export default class Task extends React.Component<TaskProps, TaskState> {
-  liRef: HTMLLIElement;
-  constructor(props: TaskProps) {
+  public liRef: HTMLLIElement;
+  public constructor(props: TaskProps) {
     super(props);
     const isEdit = props.edit || false;
     this.state = {
-      isEdit,
+      isEdit
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     window.addEventListener('keydown', this.onKeyDownListener);
     window.addEventListener('click', this.onClickListener, true);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     window.removeEventListener('keydown', this.onKeyDownListener);
     window.removeEventListener('click', this.onClickListener);
   }
 
-  saveLi = (el: HTMLLIElement) => {
+  private saveLi = (el: HTMLLIElement) => {
     this.liRef = el;
-  };
+  }
 
-  onKeyDownListener = (event: KeyboardEvent) => {
+  private onKeyDownListener = (event: KeyboardEvent) => {
     if (!this.state.isEdit) return;
-    if (event.keyCode === 13) {
+    if (event.keyCode === keyCodes.enterKeyCode) {
       this.handleHideEditor();
     }
-  };
+  }
 
-  onClickListener = (event: MouseEvent) => {
+  private onClickListener = (event: MouseEvent) => {
     if (!this.state.isEdit) return;
     const target = event.target as HTMLElement;
     const isLIRefOrChild = target === this.liRef || this.liRef.contains(target);
-    console.log(isLIRefOrChild, 1111);
     if (!isLIRefOrChild) {
       this.handleHideEditor();
     }
-  };
+  }
 
-  handleHideEditor = () => {
+  private handleHideEditor = () => {
     this.setState({ isEdit: false });
-  };
+  }
 
-  handleClickTitle = () => {
+  private handleClickTitle = () => {
     this.setState({ isEdit: true });
-  };
+  }
 
-  render() {
+  public render() {
     const { isEdit } = this.state;
     return (
       <li ref={this.saveLi} className="l-task">

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Tasks from '../tasks';
 
 function About() {
@@ -12,7 +12,7 @@ function Users() {
 
 export default class Main extends React.Component {
 
-  render() {
+  public render() {
     return (
       <div>
 
@@ -34,6 +34,6 @@ export default class Main extends React.Component {
         </Router>
       </div>
 
-    )
+    );
   }
 }

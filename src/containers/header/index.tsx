@@ -5,7 +5,7 @@ import Input from '../../components/input';
 import './index.less';
 
 export default class Header extends React.Component {
-  render() {
+  public render() {
     return (
       <div className="header">
         <div className="search">

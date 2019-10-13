@@ -1,8 +1,8 @@
-import * as React from 'react';
-import day from 'dayjs';
 import classnames from 'classnames';
-import TBody from './Tbody';
+import day from 'dayjs';
+import * as React from 'react';
 import Icon from '../icon';
+import TBody from './Tbody';
 
 import './calendar.less';
 
@@ -11,33 +11,33 @@ export interface CalendarProps {
 }
 
 export default class Calendar extends React.Component<CalendarProps> {
-  static defaultProps = {
-    fullscreen: true,
+  public static defaultProps = {
+    fullscreen: true
   };
 
-  state = {
-    current: day(),
+  public state = {
+    current: day()
   };
 
-  handleSetCurrent = (day: day.Dayjs) => {
+  private handleSetCurrent = (day: day.Dayjs) => {
     this.setState({ current: day });
-  };
+  }
 
-  handleClickPrevMonth = () => {
+  private handleClickPrevMonth = () => {
     const { current } = this.state;
     this.handleSetCurrent(current.subtract(1, 'month'));
-  };
+  }
 
-  handleClickNextMonth = () => {
+  private handleClickNextMonth = () => {
     const { current } = this.state;
     this.handleSetCurrent(current.add(1, 'month'));
-  };
+  }
 
-  render() {
+  public render() {
     const { fullscreen } = this.props;
     const { current } = this.state;
     const classString = classnames('l-calendar', {
-      'l-calendar-fullscreen': fullscreen,
+      'l-calendar-fullscreen': fullscreen
     });
     return (
       <div className={classString}>

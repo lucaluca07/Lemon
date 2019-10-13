@@ -7,17 +7,17 @@ import './editor.less';
 const TextArea = Input.TextArea;
 
 export default class Task extends React.Component {
-  input: Input;
+  private input: Input;
 
-  componentDidMount() {
+  public componentDidMount() {
     this.input.focus();
   }
 
-  saveInput = (el: Input) => {
+  private saveInput = (el: Input) => {
     this.input = el;
-  };
+  }
 
-  render() {
+  public render() {
     return (
       <div className="l-editor">
         <div className="l-editor-input-wrapper">
@@ -36,7 +36,7 @@ export default class Task extends React.Component {
             resize: 'none',
             border: 'none',
             boxShadow: 'none',
-            marginLeft: 14,
+            marginLeft: 14
           }}
         />
         <div className="l-editor-footer">

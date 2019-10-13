@@ -1,5 +1,5 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
 
 import './avatar.less';
 
@@ -14,7 +14,7 @@ const Avatar: React.SFC<AvatarProps> = ({
   src,
   alt = '头像',
   className,
-  style,
+  style
 }) => {
   const [visible, setVisible] = React.useState(true);
 
@@ -24,7 +24,7 @@ const Avatar: React.SFC<AvatarProps> = ({
 
   return (
     <div style={style} className={classString}>
-      {visible && <img onError={() => {console.log(22222); setVisible(false)}} src={src} alt={alt} />}
+      {visible && <img onError={() => setVisible(false)} src={src} alt={alt} />}
     </div>
   );
 };

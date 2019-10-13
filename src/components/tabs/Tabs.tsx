@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { isFunction } from '../../utils/typeof';
 import TabBar from './TabBar';
 import TabContent from './TabContent';
 import TabPane from './TabPane';
-import { isFunction } from '../../utils/typeof';
 import './tabs.less';
 
 export interface TabsProps {
@@ -10,7 +10,7 @@ export interface TabsProps {
   activeKey?: string;
   defaultActiveKey?: string;
   style?: React.CSSProperties;
-  onChange?: (key:  string) => void;
+  onChange?: (key: string) => void;
   renderTabBar?: () => React.ReactElement<any>;
   renderTabContent?: () => React.ReactElement<any>;
 }
@@ -31,21 +31,21 @@ const getDefaultActiveKey: (props: TabsProps) => string = props => {
 
 const activeKeyIsValid: (props: TabsProps, key: string) => boolean = (
   props,
-  key,
+  key
 ) => {
   const keys = React.Children.map(
     props.children,
-    (child: any) => child && child.key,
+    (child: any) => child && child.key
   );
   return keys.indexOf(key) >= 0;
 };
 
 export default class Tabs extends React.Component<TabsProps, TabsState> {
-  tabBar: any;
+  public tabBar: any;
 
-  static TabPane = TabPane;
+  public static TabPane = TabPane;
 
-  constructor(props: TabsProps) {
+  public constructor(props: TabsProps) {
     super(props);
 
     let activeKey: string;
@@ -59,11 +59,11 @@ export default class Tabs extends React.Component<TabsProps, TabsState> {
     }
 
     this.state = {
-      activeKey,
+      activeKey
     };
   }
 
-  static getDerivedStateFromProps(props: TabsProps, state: TabsState) {
+  public static getDerivedStateFromProps(props: TabsProps, state: TabsState) {
     const newState: {
       activeKey?: string;
     } = {};
@@ -78,28 +78,28 @@ export default class Tabs extends React.Component<TabsProps, TabsState> {
     return null;
   }
 
-  onTabClick: (activeKey: string, e: React.MouseEvent<any>) => void = (activeKey, e) => {
+  private onTabClick: (activeKey: string, e: React.MouseEvent<any>) => void = (activeKey, e) => {
     if (this.tabBar && this.tabBar.props.onTabClick) {
       this.tabBar.props.onTabClick(activeKey, e);
     }
     this.setActiveKey(activeKey);
   }
 
-  setActiveKey: (key: string) => void = (activeKey) => {
+  private setActiveKey: (key: string) => void = activeKey => {
     if (this.state.activeKey !== activeKey) {
       if (!('activeKey' in this.props)) {
         this.setState({
-          activeKey,
+          activeKey
         });
       }
       const { onChange } = this.props;
-      if(onChange && isFunction(onChange)){
+      if (onChange && isFunction(onChange)) {
         onChange(activeKey);
       }
     }
   }
 
-  renderContent = () => {
+  private renderContent = () => {
     const { renderTabBar, renderTabContent, children } = this.props;
     const { activeKey } = this.state;
 
@@ -107,20 +107,20 @@ export default class Tabs extends React.Component<TabsProps, TabsState> {
       key: 'tabBar',
       onTabClick: this.onTabClick,
       panels: children,
-      activeKey,
+      activeKey
     };
 
     const tabContentProps = {
       key: 'tabContent',
       activeKey,
       children,
-      onChange: this.setActiveKey,
+      onChange: this.setActiveKey
     };
     this.tabBar = renderTabBar && isFunction(renderTabBar) && renderTabBar();
     const tabBar = this.tabBar
        ? (
         React.cloneElement(this.tabBar, {
-          ...tabBarProps,
+          ...tabBarProps
         })
       ) : (
         <TabBar key="tabBar" {...tabBarProps} />
@@ -129,16 +129,16 @@ export default class Tabs extends React.Component<TabsProps, TabsState> {
     const tabContent =
       renderTabContent && isFunction(renderTabContent) ? (
         React.cloneElement(renderTabContent(), {
-          ...tabContentProps,
+          ...tabContentProps
         })
       ) : (
         <TabContent key="tabContent" {...tabContentProps} />
       );
 
     return [tabBar, tabContent];
-  };
+  }
 
-  render() {
+  public render() {
     return <div className="tabs" style={this.props.style}>{this.renderContent()}</div>;
   }
 }

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
 import './layout.less';
 
 export interface LayoutProps {
@@ -15,7 +15,7 @@ const Layout: React.SFC<LayoutProps> = ({
   main,
   header,
   className,
-  style,
+  style
 }) => {
   const [visible, setVisible] = React.useState(false);
 

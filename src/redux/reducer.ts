@@ -1,11 +1,11 @@
 const initialState = {};
 
-interface actionType {
+interface ActionType {
   type: string;
   payload?: any;
 }
 
-function reducer (state = initialState, action: actionType) {
+function reducer (state = initialState, action: ActionType) {
   switch (action.type) {
 
     default:

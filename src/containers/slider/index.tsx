@@ -2,6 +2,7 @@ import * as React from 'react';
 import Menu from '../../components/menu';
 import Tabs, { TabPane } from '../../components/tabs';
 import Item from './Item';
+
 import './index.less';
 
 const MenuItem = Menu.Item;
@@ -9,16 +10,16 @@ const MenuItem = Menu.Item;
 const list1 = [
   { name: '收件箱', icon: 'inbox' },
   { name: '最近7天', icon: 'calendar-w' },
-  { name: '日历', icon: 'calendar' },
+  { name: '日历', icon: 'calendar' }
 ];
 
 const list2 = [
   { name: '时间轴', icon: 'timeline' },
-  { name: '废纸篓', icon: 'dustbin' },
+  { name: '废纸篓', icon: 'dustbin' }
 ];
 
 export default class Slider extends React.Component {
-  render() {
+  public render() {
     const today = (new Date()).getDate();
     return (
       <>
