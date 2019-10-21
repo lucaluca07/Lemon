@@ -1,0 +1,32 @@
+.lemon-spin {
+  position: relative;
+  display: inline-block;
+  &-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+}
+
+.lemon-spin-spread-parent {
+  height: 100%;
+  width: 100%;
+}
+
+.lemon-spin-mask{
+  .lemon-spin-loading {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.lemon-spin-hide {
+  .lemon-spin-loading {
+    display: none;
+  }
+}
