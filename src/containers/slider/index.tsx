@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import Menu from '../../components/menu';
 import Tabs, { TabPane } from '../../components/tabs';
 import Item from './Item';
@@ -25,11 +26,15 @@ export default class Slider extends React.Component {
       <>
         <Menu style={{ margin: '16px 8px 4px' }}>
           <MenuItem>
-            <Item icon={`calendar-${today}`} name="今天" />
+            <Link to="/">
+              <Item icon={`calendar-${today}`} name="今天" />
+            </Link>
           </MenuItem>
           {list1.map(i => (
             <MenuItem key={i.name}>
-              <Item icon={i.icon} name={i.name} />
+              <Link to="/about">
+                <Item icon={i.icon} name={i.name} />
+              </Link>
             </MenuItem>
           ))}
         </Menu>

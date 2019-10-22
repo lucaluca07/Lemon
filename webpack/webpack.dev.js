@@ -12,7 +12,8 @@ module.exports  = merge(base, {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 9000
+    historyApiFallback: true,
+    port: 9000,
   },
   performance: {
     hints: false,
