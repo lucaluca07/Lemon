@@ -12,8 +12,8 @@ module.exports  = merge(base, {
     path.resolve(__dirname, '../src/index.tsx'),
   ],
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
+    filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
   module: {
     rules: [
@@ -78,7 +78,7 @@ module.exports  = merge(base, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
+      filename: "[name].[contenthash:8].css",
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html'),

@@ -1,25 +1,17 @@
-.l-calendar-fullscreen {
 
-}
-.l-calendar-table{
+.l-calendar-table {
   width: 100%;
 }
+
 .l-calendar-cell {
   text-align: center;
+
   .l-calendar-date {
     text-align: center;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 }
-.l-calendar-cell-selected {
-  .l-calendar-cell-value {
-    background: red;
-    color: white;
-    &:hover {
-      background: red;
-    }
-  }
-}
+
 .l-calendar-cell-value {
   cursor: pointer;
   height: 24px;
@@ -28,11 +20,24 @@
   display: block;
   margin: 0 auto;
   line-height: 24px;
-  &:hover {
+
+  & :hover {
     background: #e6f7ff;
   }
 }
 
-.l-calendar-prev-cell, .l-calendar-next-cell {
+.l-calendar-cell-selected {
+  .l-calendar-cell-value {
+    background: red;
+    color: white;
+
+    &:hover {
+      background: red;
+    }
+  }
+}
+
+.l-calendar-prev-cell,
+.l-calendar-next-cell {
   color: #999;
 }

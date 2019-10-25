@@ -1,31 +1,36 @@
-.t-checkbox{
-  .t-input{
+.t-checkbox {
+  .t-input {
     display: none;
   }
-  .t-checkbox-inner{
+
+  .t-checkbox-inner {
     font-size: 12px;
     margin-right: 5px;
   }
 }
-.t-checkbox:not(.t-checkbox-disabled){
+
+.t-checkbox:not(.t-checkbox-disabled) {
   &:hover {
-    .t-checkbox-inner{
+    .t-checkbox-inner {
       color: red;
     }
   }
 }
+
 .t-checkbox.t-checkbox-checked {
-  .t-checkbox-inner{
+  .t-checkbox-inner {
     color: #999;
   }
+
   &:hover {
-    .t-checkbox-inner{
+    .t-checkbox-inner {
       color: #999;
     }
   }
 }
+
 .t-checkbox-disabled {
-  .t-checkbox-inner{
+  .t-checkbox-inner {
     color: #eee;
   }
 }

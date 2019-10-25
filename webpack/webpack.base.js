@@ -17,6 +17,7 @@ module.exports  = {
     rules: [
       {
         test: /\.tsx?$/,
+        exclude: /node_modules/,
         use: [
           { loader: 'ts-loader', options: { transpileOnly: true } }
         ]
@@ -29,14 +30,22 @@ module.exports  = {
         },
       },
       {
+        test: /\.jsx?$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        use: {
+          loader: 'eslint-loader',
+        }
+      },
+      {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.less$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'less-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
       },
       {
         // Preprocess 3rd party .css files located in node_modules
