@@ -3,16 +3,31 @@ const merge = require('webpack-merge');
 const base = require('./webpack.base');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports  = merge(base, {
   mode: 'production',
   entry: [
-    path.resolve(__dirname, '../src/index.tex'),
+    path.resolve(__dirname, '../src/index.tsx'),
   ],
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+      },
+    ]
   },
   optimization: {
     minimize: true,
@@ -62,9 +77,12 @@ module.exports  = merge(base, {
     runtimeChunk: true,
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../../public/index.html'),
-      favicon: path.resolve(__dirname, '../../public/favicon.ico'),
+      template: path.resolve(__dirname, '../public/index.html'),
+      favicon: path.resolve(__dirname, '../public/favicon.ico'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
