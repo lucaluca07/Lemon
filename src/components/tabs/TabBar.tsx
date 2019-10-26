@@ -1,12 +1,12 @@
-import * as React from 'react';
 import classnames from 'classnames';
-import { tabPaneProps } from './TabPane';
+import * as React from 'react';
 import './tabBar.less';
+import { tabPaneProps } from './TabPane';
 
 export interface TabBarProps {
   activeKey: string;
   panels: React.ReactNode;
-  onTabClick?:(key: string, e: React.MouseEvent) => void;
+  onTabClick?: (key: string, e: React.MouseEvent) => void;
 }
 
 const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
@@ -16,16 +16,16 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
   const tabBars = React.useMemo(() => {
     return React.Children.map(
       panels,
-      (child: { props: tabPaneProps, key: string }) => ({
+      (child: { props: tabPaneProps; key: string }) => ({
         tab: child.props.tab,
-        key: child.key,
-      }),
+        key: child.key
+      })
     );
   }, [panels]);
 
   React.useEffect(() => {
     const node: HTMLElement | null = document.querySelector('.tab-bar-active');
-    if(node) {
+    if (node) {
       const width = node.offsetWidth;
       const position = node.offsetLeft;
       setWidth(width);
@@ -40,10 +40,10 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
         {tabBars && tabBars.map(el => (
           <li
             className={classnames('tab-bar-item', {
-              'tab-bar-active': el.key === activeKey,
+              'tab-bar-active': el.key === activeKey
             })}
             onClick={e => {
-              onTabClick && onTabClick(el.key, e)
+              onTabClick && onTabClick(el.key, e);
             }}
             key={el.key}
           >

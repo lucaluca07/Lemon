@@ -1,5 +1,5 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
 import './textarea.less';
 
 export interface TextAreaProps
@@ -14,33 +14,33 @@ export interface TextAreaState {
 }
 
 export default class TextArea extends React.Component<TextAreaProps, TextAreaState> {
-  textArea: HTMLTextAreaElement;
+  public textArea: HTMLTextAreaElement;
 
-  state = {
+  public state = {
     textAreaStyles: {},
-    resizing: false,
+    resizing: false
   };
 
-  static defaultProps = {
-    autosize: false,
-  }
+  public static defaultProps = {
+    autosize: false
+  };
 
-  componentDidMount() {
+  public componentDidMount() {
     this.resizeTextarea();
   }
 
-  componentDidUpdate(prevProps: TextAreaProps) {
+  public componentDidUpdate(prevProps: TextAreaProps) {
     // Re-render with the new content then recalculate the height as required.
     if (prevProps.value !== this.props.value) {
       this.resizeTextarea();
     }
   }
 
-  saveTextarea = (node: HTMLTextAreaElement) => {
+  public saveTextarea = (node: HTMLTextAreaElement) => {
     this.textArea = node;
-  };
+  }
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  public handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
     if (e.keyCode === 13 && onPressEnter) {
       onPressEnter(e);
@@ -48,11 +48,11 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     if (onKeyDown) {
       onKeyDown(e);
     }
-  };
+  }
 
 
 
-  handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  public handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (!('value' in this.props)) {
       this.resizeTextarea();
     }
@@ -60,9 +60,9 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     if (onChange) {
       onChange(e);
     }
-  };
+  }
 
-  resizeTextarea = () => {
+  public resizeTextarea = () => {
     const { autosize } = this.props;
     if (!autosize || !this.textArea) {
       return;
@@ -92,21 +92,21 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
       height -= paddingSize;
     }
 
-    const textAreaStyles = { height }
+    const textAreaStyles = { height };
     this.setState({ textAreaStyles, resizing: true }, () => {
       this.setState({ resizing: false });
     });
-  };
+  }
 
   public focus = () => {
     this.textArea.focus();
-  };
+  }
 
   public blur = () => {
     this.textArea.blur();
-  };
+  }
 
-  render() {
+  public render() {
     const {
       style,
       className,
@@ -119,7 +119,7 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     const _style = {
       ...style,
       ...textAreaStyles,
-      ...(resizing ? { overflow: 'hidden' } : null),
+      ...(resizing ? { overflow: 'hidden' } : null)
     };
 
 

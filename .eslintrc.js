@@ -10,5 +10,16 @@
 
 module.exports = {
   extends: 'eslint-config-alloy/react',
-  rules: {}
+  rules: {
+    // 这里填入你的项目需要的个性化配置，比如：
+    //
+    // 一个缩进必须用两个空格替代
+    "indent": [
+        true,
+        "spaces",
+        2
+    ],
+    "member-ordering": false,
+    "arrow-parens":  [true, "ban-single-arg-parens"]
+  }
 };

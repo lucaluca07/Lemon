@@ -30,22 +30,29 @@ module.exports  = {
         },
       },
       {
-        test: /\.jsx?$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-        }
-      },
-      {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 }
+          },
+          'postcss-loader',
+        ],
       },
       {
         test: /\.less$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 }
+          },
+          'postcss-loader',
+          'less-loader'
+        ],
       },
       {
         // Preprocess 3rd party .css files located in node_modules

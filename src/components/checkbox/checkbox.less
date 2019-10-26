@@ -7,6 +7,22 @@
     font-size: 12px;
     margin-right: 5px;
   }
+
+  .t-checkbox-checked {
+    .t-checkbox-inner {
+      color: #999;
+    }
+
+    &:hover {
+      .t-checkbox-inner {
+        color: #999;
+      }
+    }
+  }
+
+  .t-checkbox-disabled.t-checkbox-inner {
+    color: #eee;
+  }
 }
 
 .t-checkbox:not(.t-checkbox-disabled) {
@@ -14,23 +30,5 @@
     .t-checkbox-inner {
       color: red;
     }
-  }
-}
-
-.t-checkbox.t-checkbox-checked {
-  .t-checkbox-inner {
-    color: #999;
-  }
-
-  &:hover {
-    .t-checkbox-inner {
-      color: #999;
-    }
-  }
-}
-
-.t-checkbox-disabled {
-  .t-checkbox-inner {
-    color: #eee;
   }
 }

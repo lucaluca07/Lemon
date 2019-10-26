@@ -1,6 +1,6 @@
-import * as React from 'react';
 import classnames from 'classnames';
 import day from 'dayjs';
+import * as React from 'react';
 
 import './tbody.less';
 
@@ -11,16 +11,16 @@ export interface TBodyProps {
 }
 
 export default class TBody extends React.Component<TBodyProps> {
-  componentDidMount() {
+  public componentDidMount() {
 
   }
 
-  handleClick = (day: day.Dayjs) => {
+  public handleClick = (day: day.Dayjs) => {
     const { onClick } = this.props;
-    if(onClick) onClick(day);
+    if (onClick) onClick(day);
   }
 
-  renderDays() {
+  public renderDays() {
     const days: day.Dayjs[] = [];
     const current = this.props.current;
     const currentStart: day.Dayjs = current.startOf('month');
@@ -54,13 +54,13 @@ export default class TBody extends React.Component<TBodyProps> {
     }
 
     const className = (item: day.Dayjs) => {
-      console.log(item.isSame(current, 'day'), item.date(), 'day')
+      console.log(item.isSame(current, 'day'), item.date(), 'day');
       return classnames('l-calendar-cell', {
         'l-calendar-prev-cell': item.isBefore(current, 'month'),
         'l-calendar-next-cell': item.isAfter(current, 'month'),
         'l-calendar-cell-selected': item.isSame(current, 'day'),
         'l-calendar-first-day-of-month': item.startOf('month').isSame(item, 'day'),
-        'l-calendar-last-day-of-month': item.endOf('month').isSame(item, 'day'),
+        'l-calendar-last-day-of-month': item.endOf('month').isSame(item, 'day')
       });
     };
     return arr.map((el, index) => {
@@ -85,7 +85,7 @@ export default class TBody extends React.Component<TBodyProps> {
     });
   }
 
-  render() {
+  public render() {
     return (
       <table className="l-calendar-table">
         <thead>

@@ -6,7 +6,7 @@ export interface tabPaneProps{
   forceRender?: boolean;
   placeholder?: React.ReactNode;
   children?: React.ReactNode;
-};
+}
 
  const TabPane: React.SFC<tabPaneProps> = () => null;
 

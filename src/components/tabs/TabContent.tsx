@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { tabPaneProps } from './TabPane';
 import './tabContent.less';
+import { tabPaneProps } from './TabPane';
 
 export interface TabBarProps {
   activeKey: string;
@@ -16,8 +16,8 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, children }) => {
         content: child.props.children,
         key: child.key,
         placeholder: child.props.placeholder,
-        forceRender: child.props.forceRender,
-      }),
+        forceRender: child.props.forceRender
+      })
     );
   }, [children]);
 

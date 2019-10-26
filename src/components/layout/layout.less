@@ -1,5 +1,5 @@
-@aside-width: 260px;
-@max-width: 860px;
+@asideWidth: 260px;
+@maxWidth: 860px;
 
 .l-layout {
   height: 100vh;
@@ -16,7 +16,7 @@
       display: flex;
       margin: 0 auto;
       padding-left: 8px;
-      width: @max-width;
+      width: @maxWidth;
       box-sizing: border-box;
       position: relative;
     }
@@ -34,7 +34,7 @@
   &-article {
     position: relative;
     flex: 1;
-    max-width: @max-width;
+    max-width: @maxWidth;
     margin: 0 auto;
   }
 
@@ -42,13 +42,13 @@
     background-color: #fff;
     height: 100%;
     padding: 16px;
-    margin-left: @aside-width;
-    width: @max-width - @aside-width;
+    margin-left: @asideWidth;
+    width: @maxWidth - @asideWidth;
     box-sizing: border-box;
   }
 
   &-aside {
-    width: @aside-width;
+    width: @asideWidth;
     position: absolute;
     top: 0;
     left: 0;
@@ -92,7 +92,7 @@
     }
 
     &-main {
-      width: calc(100% - @aside-width);
+      width: calc(100% - @asideWidth);
     }
   }
 
@@ -118,7 +118,7 @@
     }
 
     &-aside {
-      left: -@aside-width;
+      left: -@asideWidth;
       transition: all 0.3s;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
