@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface tabPaneProps{
+export interface TabPaneProps{
   tab: string | React.ReactNode;
   key: string;
   forceRender?: boolean;
@@ -8,6 +8,6 @@ export interface tabPaneProps{
   children?: React.ReactNode;
 }
 
- const TabPane: React.SFC<tabPaneProps> = () => null;
+ const TabPane: React.SFC<TabPaneProps> = () => null;
 
 export default TabPane;

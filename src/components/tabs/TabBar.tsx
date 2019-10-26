@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import './tabBar.less';
-import { tabPaneProps } from './TabPane';
+import { TabPaneProps } from './TabPane';
 
 export interface TabBarProps {
   activeKey: string;
@@ -16,7 +16,7 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
   const tabBars = React.useMemo(() => {
     return React.Children.map(
       panels,
-      (child: { props: tabPaneProps; key: string }) => ({
+      (child: { props: TabPaneProps; key: string }) => ({
         tab: child.props.tab,
         key: child.key
       })
@@ -43,7 +43,7 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
               'tab-bar-active': el.key === activeKey
             })}
             onClick={e => {
-              onTabClick && onTabClick(el.key, e);
+              if (onTabClick) onTabClick(el.key, e);
             }}
             key={el.key}
           >

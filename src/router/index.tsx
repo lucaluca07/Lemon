@@ -3,11 +3,11 @@ import { Route, Switch } from 'react-router-dom';
 import Tasks from '../containers/tasks';
 
 function About() {
-  return <h2>About</h2>
+  return <h2>About</h2>;
 }
 
 function Users() {
-  return <h2>Users</h2>
+  return <h2>Users</h2>;
 }
 
 const RouterMap: React.SFC = () => {

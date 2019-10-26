@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
+import { keyCodes } from '../../utils/contants';
 import './textarea.less';
 
 export interface TextAreaProps
@@ -42,7 +43,7 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
 
   public handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
-    if (e.keyCode === 13 && onPressEnter) {
+    if (e.keyCode === keyCodes.enterKeyCode && onPressEnter) {
       onPressEnter(e);
     }
     if (onKeyDown) {

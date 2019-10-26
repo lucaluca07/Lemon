@@ -8,9 +8,9 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js",
     "lint:style":"stylelint **/*.less --syntax less --fix",
-    "lint:js":"eslint --fix 'src/**/*{.js,.jsx}'",
-    "lint:ts":"tslint --fix -c ./tslint.json 'packages/**/*{.ts,.tsx}'",
-    "lint": "lint:style && lint:js && lint:ts",
+    "lint:js":"eslint --cache --ext .js,.jsx --fix",
+    "lint:ts":"tslint --fix -c ./tslint.json 'src/**/*{.ts,.tsx}'",
+    "lint": "npm run lint:style & npm run lint:ts",
     "test": "test"
   },
   "keywords": [
