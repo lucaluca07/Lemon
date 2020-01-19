@@ -4,13 +4,13 @@
   "description": "lemon todo",
   "main": "index.js",
   "scripts": {
-    "precommit": "npm run lint",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js",
-    "lint:style":"stylelint **/*.less --syntax less --fix",
-    "lint:js":"eslint --cache --ext .js,.jsx --fix",
-    "lint:ts":"tslint --fix -c ./tslint.json 'src/**/*{.ts,.tsx}'",
-    "lint": "npm run lint:style & npm run lint:ts",
+    "lint:style": "stylelint **/*.less --syntax less --fix",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx,.vue --ignore-pattern \"bad.*\" .",
+    "lint": "npm run lint:style & npm run eslint",
+    "prettier": "prettier -l \"./**/*\"",
+    "prettier:fix": "prettier --write -l \"./**/*\"",
     "test": "test"
   },
   "keywords": [
@@ -56,9 +56,6 @@
     "stylelint-config-standard": "^19.0.0",
     "svg-url-loader": "^3.0.0",
     "ts-loader": "^6.0.4",
-    "tslint": "^5.19.0",
-    "tslint-config-alloy": "^0.2.1",
-    "tslint-loader": "^3.5.4",
     "typescript": "^3.5.3",
     "url-loader": "^2.1.0",
     "webpack": "^4.39.2",

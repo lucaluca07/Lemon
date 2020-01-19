@@ -3,8 +3,7 @@ import * as React from 'react';
 import { keyCodes } from '../../utils/contants';
 import './textarea.less';
 
-export interface TextAreaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   onPressEnter?: React.KeyboardEventHandler<HTMLTextAreaElement>;
   autosize?: boolean;
 }
@@ -39,7 +38,7 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
 
   public saveTextarea = (node: HTMLTextAreaElement) => {
     this.textArea = node;
-  }
+  };
 
   public handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
@@ -49,9 +48,7 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     if (onKeyDown) {
       onKeyDown(e);
     }
-  }
-
-
+  };
 
   public handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (!('value' in this.props)) {
@@ -61,7 +58,7 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     if (onChange) {
       onChange(e);
     }
-  }
+  };
 
   public resizeTextarea = () => {
     const { autosize } = this.props;
@@ -97,22 +94,18 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
     this.setState({ textAreaStyles, resizing: true }, () => {
       this.setState({ resizing: false });
     });
-  }
+  };
 
   public focus = () => {
     this.textArea.focus();
-  }
+  };
 
   public blur = () => {
     this.textArea.blur();
-  }
+  };
 
   public render() {
-    const {
-      style,
-      className,
-      ...otherProps
-    } = this.props;
+    const { style, className, ...otherProps } = this.props;
     otherProps.autosize = void 0;
     const { textAreaStyles, resizing } = this.state;
     const classString = classnames('l-textarea', className);
@@ -122,7 +115,6 @@ export default class TextArea extends React.Component<TextAreaProps, TextAreaSta
       ...textAreaStyles,
       ...(resizing ? { overflow: 'hidden' } : null)
     };
-
 
     return (
       <textarea

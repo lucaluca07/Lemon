@@ -14,13 +14,10 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
   const [position, setPosition] = React.useState(0);
 
   const tabBars = React.useMemo(() => {
-    return React.Children.map(
-      panels,
-      (child: { props: TabPaneProps; key: string }) => ({
-        tab: child.props.tab,
-        key: child.key
-      })
-    );
+    return React.Children.map(panels, (child: { props: TabPaneProps; key: string }) => ({
+      tab: child.props.tab,
+      key: child.key
+    }));
   }, [panels]);
 
   React.useEffect(() => {
@@ -31,25 +28,25 @@ const TabBar: React.SFC<TabBarProps> = ({ activeKey, panels, onTabClick }) => {
       setWidth(width);
       setPosition(position);
     }
-
   }, [activeKey]);
 
   return (
     <div className="tab-bar">
       <ul className="tab-bar-list">
-        {tabBars && tabBars.map(el => (
-          <li
-            className={classnames('tab-bar-item', {
-              'tab-bar-active': el.key === activeKey
-            })}
-            onClick={e => {
-              if (onTabClick) onTabClick(el.key, e);
-            }}
-            key={el.key}
-          >
-            {el.tab}
-          </li>
-        ))}
+        {tabBars &&
+          tabBars.map((el) => (
+            <li
+              className={classnames('tab-bar-item', {
+                'tab-bar-active': el.key === activeKey
+              })}
+              onClick={(e) => {
+                if (onTabClick) onTabClick(el.key, e);
+              }}
+              key={el.key}
+            >
+              {el.tab}
+            </li>
+          ))}
       </ul>
       <div style={{ width, left: position }} className="tab-bar-inner" />
     </div>
