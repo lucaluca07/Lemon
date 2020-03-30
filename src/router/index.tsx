@@ -16,6 +16,11 @@ const RouterMap: React.SFC = () => {
       <Route path="/" exact component={Tasks} />
       <Route path="/about/" component={About} />
       <Route path="/users/" component={Users} />
+      <Route path="/week/" component={Users} />
+      <Route path="/inbox/" component={Users} />
+      <Route path="/trash/" component={Users} />
+      <Route path="/order/" component={Users} />
+      <Route path="/tag/" component={Users} />
     </Switch>
   );
 };
