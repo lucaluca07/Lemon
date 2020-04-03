@@ -37,8 +37,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "lint --fix --max-warnings 0",
-      "git add"
+      "yarn eslint --fix --max-warnings 0",
+      "yarn prettier:fix"
     ]
   },
   "resolutions": {
