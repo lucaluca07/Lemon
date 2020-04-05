@@ -1,0 +1,13 @@
+.layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  &-content {
+    flex: 1;
+  }
+}
+
+.layout-horizontal {
+  flex-direction: row;
+}

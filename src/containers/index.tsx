@@ -13,7 +13,7 @@ const Index: React.FC = () => {
       const rang = document.createRange(); // 创建一个rang对象
       const content = (e.target as HTMLElement).firstChild;
       if (content) {
-        const { startOffset, endOffset } = range;
+        const { startOffset } = range;
         rang.setStart(content, startOffset);
         rang.setEnd(content, 1);
         rang.collapse(false); // 起始位置和终止位置是否相同的布尔值
