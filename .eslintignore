@@ -2,3 +2,5 @@ bad.*
 *.test.tsx
 src/serviceWorker.ts
 *.d.ts
+config/*
+scripts/*
