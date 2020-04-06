@@ -5,8 +5,8 @@ interface IRoute {
 }
 
 const routes: IRoute[] = [
-  { path: '/', component: 'index' },
-  { path: '/about', component: 'about' },
+  { path: '/', component: 'tasks' },
+  { path: '/about', component: 'tasks' },
 ];
 
 export default routes;

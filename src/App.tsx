@@ -1,5 +1,7 @@
 import React from 'react';
 import Layout, { Header, Content, Sider } from './components/layout';
+import TopBar from './containers/top-bar';
+import SideBar from './containers/side-bar';
 import RouterMap from './router/index';
 import './App.css';
 
@@ -7,10 +9,12 @@ function App() {
   return (
     <Layout>
       <Header>
-        <span className="layout-sider-switch">切换Sider</span>Header
+        <TopBar />
       </Header>
       <Layout>
-        <Sider>Sider</Sider>
+        <Sider>
+          <SideBar />
+        </Sider>
         <Content>
           <RouterMap />
         </Content>

@@ -11,7 +11,6 @@ const Layout: React.FC = ({ children }) => {
       >
         {children}
       </section>
-      ;
     </LayoutContext.Provider>
   );
 };

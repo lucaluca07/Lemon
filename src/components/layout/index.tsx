@@ -1,5 +1,5 @@
 import Layout from './layout';
-import './index.scss';
+import './index.less';
 
 export { default as Sider } from './sider';
 export { default as Header } from './header';
