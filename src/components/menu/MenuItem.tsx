@@ -11,7 +11,7 @@ interface IProps {
 const MenuItem: React.FC<IProps> = ({ prefix, after, children, eventKey }) => {
   const { state } = useContext(menuContext);
   return (
-    <div
+    <li
       className={classNames('menu-item', {
         'menu-item-active': state?.selectedKeys.includes(eventKey),
       })}
@@ -19,7 +19,7 @@ const MenuItem: React.FC<IProps> = ({ prefix, after, children, eventKey }) => {
       {prefix}
       {children}
       {after}
-    </div>
+    </li>
   );
 };
 

@@ -18,6 +18,13 @@ const SideBar: React.FC = () => {
             </MenuItem>
           ))}
         </SubMenu>
+        <SubMenu title="SubMenu" eventKey="subMenu1">
+          {list.map((item) => (
+            <MenuItem eventKey={item} key={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </SubMenu>
       </Menu>
     </div>
   );
