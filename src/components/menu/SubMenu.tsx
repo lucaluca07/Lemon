@@ -5,6 +5,7 @@ import React, {
   useState,
   useCallback,
   useRef,
+  CSSProperties,
 } from 'react';
 import classNames from 'classnames';
 import menuContext from './store';
@@ -17,31 +18,35 @@ interface SubMenuProps {
 const SubMenu: React.FC<SubMenuProps> = ({ title, children, eventKey }) => {
   const { state, dispatch } = useContext(menuContext);
   const [visible, setVisible] = useState(state?.openKeys.includes(eventKey));
+  const [style, setStyle] = useState<CSSProperties>({});
   const isOpen = useMemo(() => {
     return state?.openKeys.includes(eventKey);
   }, [state?.openKeys, eventKey]);
 
   const menuRef = useRef<HTMLUListElement>(null);
+  // 缓慢展开收起的动画
   useEffect(() => {
     setTimeout(() => {
       setVisible(isOpen);
+      menuRef?.current?.setAttribute('style', '');
     }, 300);
     if (!menuRef.current) return;
     const el = menuRef.current;
+    el.style.display = 'block';
+    el.style.height = 'auto';
+    const height = window.getComputedStyle(el).height;
     if (isOpen) {
-      el.style.height = 'auto';
-      const height = window.getComputedStyle(el).height;
-      console.log(height);
-      console.log(window.getComputedStyle(el).height);
       el.style.height = '0';
-      // 不设定延迟height不会有动画
-      setTimeout(function () {
+      setTimeout(() => {
         el.style.height = height;
         el.style.opacity = '1';
       }, 0);
     } else {
-      el.style.height = '0px';
-      el.style.opacity = '0';
+      el.style.height = height;
+      setTimeout(() => {
+        el.style.height = '0px';
+        el.style.opacity = '0';
+      }, 0);
     }
   }, [isOpen]);
 
@@ -65,6 +70,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ title, children, eventKey }) => {
       </div>
       <ul
         ref={menuRef}
+        style={{ ...style }}
         className={classNames('menu', { 'menu-hidden': !visible })}
       >
         {children}
