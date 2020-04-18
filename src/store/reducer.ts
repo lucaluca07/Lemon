@@ -1,25 +1,10 @@
-import { Action } from 'redux';
+import { combineReducers } from 'redux';
+import menus from './menus';
 
-const INCREMENT = 'INCREMENT';
-const DECREMENT = 'DECREMENT';
+const rootReducer = combineReducers({
+  menus,
+});
 
-export function increment() {
-  return { type: INCREMENT };
-}
+export type RootState = ReturnType<typeof rootReducer>;
 
-export function decrement() {
-  return { type: DECREMENT };
-}
-
-function counter(state = 0, action: Action) {
-  switch (action.type) {
-    case INCREMENT:
-      return state + 1;
-    case DECREMENT:
-      return state - 1;
-    default:
-      return state;
-  }
-}
-
-export default counter;
+export default rootReducer;

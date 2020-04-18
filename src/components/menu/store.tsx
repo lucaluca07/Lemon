@@ -15,11 +15,6 @@ const MenuContext = React.createContext<{
   dispatch?: React.Dispatch<IAction>;
 }>({});
 
-export const initialState: IState = {
-  openKeys: [],
-  selectedKeys: [],
-};
-
 export const reducer = (state: IState, action: IAction) => {
   switch (action.type) {
     case 'UPDATE_OPEN_KEYS':

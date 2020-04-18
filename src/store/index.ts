@@ -1,9 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from './reducer';
+import rootReducer from './reducer';
 
-const initStore = () => {
-  const store = configureStore({ reducer });
-  return store;
-};
+const store = configureStore({
+  reducer: rootReducer,
+});
 
-export default initStore;
+if (process.env.NODE_ENV === 'development' && module.hot) {
+  module.hot.accept('./reducer', () => {
+    const newRootReducer = require('./reducer').default;
+    store.replaceReducer(newRootReducer);
+  });
+}
+
+export type AppDispatch = typeof store.dispatch;
+
+export default store;

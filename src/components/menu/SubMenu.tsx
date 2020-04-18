@@ -17,10 +17,9 @@ interface SubMenuProps {
 
 const SubMenu: React.FC<SubMenuProps> = ({ title, children, eventKey }) => {
   const { state, dispatch } = useContext(menuContext);
-  const [visible, setVisible] = useState(state?.openKeys.includes(eventKey));
-  const [style, setStyle] = useState<CSSProperties>({});
+  const [visible, setVisible] = useState(state?.openKeys?.includes(eventKey));
   const isOpen = useMemo(() => {
-    return state?.openKeys.includes(eventKey);
+    return state?.openKeys?.includes(eventKey);
   }, [state?.openKeys, eventKey]);
 
   const menuRef = useRef<HTMLUListElement>(null);
@@ -60,7 +59,9 @@ const SubMenu: React.FC<SubMenuProps> = ({ title, children, eventKey }) => {
         onClick={() => {
           dispatch?.({
             type: 'UPDATE_OPEN_KEYS',
-            payload: isOpen ? [] : [eventKey],
+            payload: isOpen
+              ? state?.openKeys.filter((key) => key !== eventKey)
+              : [...(state?.openKeys || []), eventKey],
           });
         }}
         className={classNames('menu-submenu-title')}
@@ -70,7 +71,6 @@ const SubMenu: React.FC<SubMenuProps> = ({ title, children, eventKey }) => {
       </div>
       <ul
         ref={menuRef}
-        style={{ ...style }}
         className={classNames('menu', { 'menu-hidden': !visible })}
       >
         {children}
