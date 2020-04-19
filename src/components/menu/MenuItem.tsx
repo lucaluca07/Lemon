@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, useMemo } from 'react';
 import classNames from 'classnames';
 import menuContext from './store';
 
@@ -16,12 +16,18 @@ const MenuItem: React.FC<IProps> = ({
   children,
   eventKey,
 }) => {
-  const { state } = useContext(menuContext);
+  const { state, dispatch } = useContext(menuContext);
+  const isActive = useMemo(() => {
+    return state?.selectedKeys.includes(eventKey);
+  }, [state?.selectedKeys, eventKey]);
   return (
     <li
-      onClick={() => onClick?.(eventKey)}
+      onClick={() => {
+        if (isActive) return;
+        dispatch?.({ type: 'UPDATE_SELECTED_KEYS', payload: [eventKey] });
+      }}
       className={classNames('menu-item', {
-        'menu-item-active': state?.selectedKeys.includes(eventKey),
+        'menu-item-active': isActive,
       })}
     >
       {prefix}
