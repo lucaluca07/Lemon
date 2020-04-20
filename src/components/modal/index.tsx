@@ -1,14 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from './Modal';
+import useModal from './useModal';
 import './style.less';
 
-const info = () => {
+interface FnProps {
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  content: React.ReactNode;
+  visible: boolean;
+}
+
+const info = (config: FnProps) => {
   const div = document.createElement('div');
   document.body.appendChild(div);
 
   function render() {
-    ReactDOM.render(<Modal>Modal</Modal>, div);
+    ReactDOM.render(
+      <Modal {...config} onCancel={destory}>
+        {config.content}
+      </Modal>,
+      div,
+    );
   }
 
   function destory() {
@@ -16,18 +29,6 @@ const info = () => {
     if (unmountResult && div.parentNode) {
       div.parentNode.removeChild(div);
     }
-    // const triggerCancel = args.some(param => param && param.triggerCancel);
-    // if (config.onCancel && triggerCancel) {
-    //   config.onCancel(...args);
-    // }
-    // for (let i = 0; i < destroyFns.length; i++) {
-    //   const fn = destroyFns[i];
-    //   // eslint-disable-next-line no-use-before-define
-    //   if (fn === close) {
-    //     destroyFns.splice(i, 1);
-    //     break;
-    //   }
-    // }
   }
 
   function update() {
@@ -43,4 +44,5 @@ const info = () => {
 
 export default {
   info,
+  useModal,
 };

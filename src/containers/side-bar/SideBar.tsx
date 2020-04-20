@@ -5,12 +5,23 @@ import { RootState } from 'src/store/reducer';
 import Menu, { SubMenu, MenuItem } from 'src/components/menu';
 import { addProject } from 'src/store/menus';
 import Modal from 'src/components/modal';
+import ModalContent from './ModalContent';
 
 const SideBar: React.FC = () => {
   const menus = useSelector((state: RootState) => state.menus);
   const history = useHistory();
-  const dispatch = useDispatch();
   const { bases, projects } = menus;
+
+  const content = useMemo(() => {
+    return <ModalContent />;
+  }, []);
+
+  const { open } = Modal.useModal({
+    visible: false,
+    header: '添加项目',
+    content,
+    onOk: () => {},
+  });
   const location = useLocation();
 
   const defaultSelectedKeys = useMemo(() => {
@@ -50,16 +61,7 @@ const SideBar: React.FC = () => {
               </MenuItem>
             ))}
           {!projects.length && <span className="empty">暂无项目</span>}
-          <div
-            className="add-project actions"
-            onClick={() => {
-              dispatch(addProject('项目一'));
-              const { destory } = Modal.info();
-              setTimeout(() => {
-                destory();
-              }, 2000);
-            }}
-          >
+          <div className="add-project actions" onClick={open}>
             <i className="iconfont icon-icon_add_round menu-icon" />
             <i className="iconfont icon-icon_add_fill menu-icon" />
             <span>添加项目</span>
