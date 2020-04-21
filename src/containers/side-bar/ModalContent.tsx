@@ -1,6 +1,5 @@
 import React from 'react';
-
-const colors = ['#fff1f0', '#ffccc7', '#ffa39e', '#ff7875', '#f5222d', ''];
+import ColorPicker from 'src/components/color-picker';
 
 const ModalContent: React.FC = () => {
   return (
@@ -11,10 +10,7 @@ const ModalContent: React.FC = () => {
       </label>
       <label>
         <span>项目颜色</span>
-        <input type="radio" />
-        <input type="radio" />
-        <input type="radio" />
-        <input type="radio" />
+        <ColorPicker />
       </label>
     </>
   );

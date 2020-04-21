@@ -1,0 +1,31 @@
+.color-picker {
+  position: relative;
+  &-base {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  &-item,
+  &-more-btn {
+    list-style: none;
+    width: 24px;
+    height: 24px;
+    margin: 4px;
+    border-radius: 50%;
+  }
+  &-more-btn {
+    border: 1px solid #eee;
+    text-align: center;
+    line-height: 24px;
+  }
+  &-more {
+    position: absolute;
+    .color-picker-item {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  &-more-hide {
+    display: none;
+  }
+}
