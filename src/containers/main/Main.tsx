@@ -1,19 +1,14 @@
-import * as React from 'react';
+import React, { useRef } from 'react';
 import Tooltip from 'src/components/tooltip';
+import Button from 'src/components/button';
 
 const Main: React.FC = () => {
+  const testNode = useRef(null);
   return (
     <div className="main">
       Main
       <Tooltip>
-        <div
-          className="tooltip-test"
-          onClick={() => {
-            console.log(1111);
-          }}
-        >
-          Tooltip Click
-        </div>
+        <Button>Tooltip Click</Button>
       </Tooltip>
     </div>
   );
