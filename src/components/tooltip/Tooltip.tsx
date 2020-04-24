@@ -1,14 +1,11 @@
-import React, { useMemo, useCallback, useRef, useEffect } from 'react';
-import { supportRef, composeRef } from 'src/utils/ref';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
+import Popup from './Popup';
 
-interface IProps {
-  children: React.ReactNode;
-  visible?: boolean;
-}
+let tooltipIndex = 0;
 
-const Tooltip: React.FC<IProps> = ({ children, visible }) => {
-  const childRef = useRef(null);
-
+const Tooltip: React.FC = ({ children }) => {
+  const [visible, setVisible] = useState(false);
+  const [rect, setRect] = useState({ height: 0, left: 0, top: 0 });
   const fireEvents = useCallback(
     (type: string, e: Event) => {
       const childCallback = (children as React.ReactElement).props[type];
@@ -24,24 +21,42 @@ const Tooltip: React.FC<IProps> = ({ children, visible }) => {
     [children],
   );
 
-  const onClick = useCallback((event) => {
-    console.log(visible);
-    fireEvents('onClick', event);
-    console.log('tooltip onClick', childRef);
-  }, []);
+  const cl = useMemo(() => `tooltip-index-${tooltipIndex++}`, []);
 
-  const ref = useMemo(() => {
-    if (supportRef(child)) {
-      return composeRef(childRef, (child as any).ref);
+  const className = useMemo(() => {
+    const className = (children as React.ReactElement).props.className || '';
+    return `${className} ${cl}`;
+  }, [children]);
+
+  const toggleVisible = useCallback(() => {
+    if (visible) {
+      setVisible(false);
+    } else {
+      const triggerNode = document.querySelector(`.${cl}`);
+      if (!triggerNode) return;
+      const { top, height, left } = triggerNode.getBoundingClientRect();
+      setRect({ top, height, left });
+      setVisible(true);
     }
-    return undefined;
-  }, [child]);
+  }, [visible, cl]);
 
-  return React.cloneElement(child, {
-    ref,
-    onClick,
-    className: 'test',
-  });
+  const onClick = useCallback(
+    (event) => {
+      fireEvents('onClick', event);
+      toggleVisible();
+    },
+    [toggleVisible],
+  );
+
+  return (
+    <>
+      {React.cloneElement(child, {
+        onClick,
+        className,
+      })}
+      <Popup {...rect} visible={visible} />
+    </>
+  );
 };
 
 export default Tooltip;
