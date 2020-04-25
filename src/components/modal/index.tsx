@@ -16,7 +16,7 @@ const info = (config: FnProps) => {
   document.body.appendChild(div);
 
   function render() {
-    ReactDOM.render(
+    ReactDOM.createPortal(
       <Modal {...config} onCancel={destory}>
         {config.content}
       </Modal>,

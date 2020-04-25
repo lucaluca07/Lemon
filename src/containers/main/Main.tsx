@@ -7,7 +7,7 @@ const Main: React.FC = () => {
   return (
     <div className="main">
       Main
-      <Tooltip>
+      <Tooltip title="tooltip">
         <Button>Tooltip Click</Button>
       </Tooltip>
     </div>

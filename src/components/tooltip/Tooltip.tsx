@@ -3,7 +3,11 @@ import Popup from './Popup';
 
 let tooltipIndex = 0;
 
-const Tooltip: React.FC = ({ children }) => {
+interface IProps {
+  title: React.ReactNode;
+}
+
+const Tooltip: React.FC<IProps> = ({ children, title }) => {
   const [visible, setVisible] = useState(false);
   const [rect, setRect] = useState({ height: 0, left: 0, top: 0 });
   const fireEvents = useCallback(
@@ -54,7 +58,7 @@ const Tooltip: React.FC = ({ children }) => {
         onClick,
         className,
       })}
-      <Popup {...rect} visible={visible} />
+      <Popup {...rect} title={title} visible={visible} />
     </>
   );
 };

@@ -4,14 +4,14 @@ import ColorPicker from 'src/components/color-picker';
 const ModalContent: React.FC = () => {
   return (
     <>
-      <label>
-        <span>项目名称</span>
+      <div className="form-field">
+        <label className="form-field-label">项目名称</label>
         <input type="text" />
-      </label>
-      <label>
-        <span>项目颜色</span>
+      </div>
+      <div className="form_field">
+        <label className="form-field-label">项目颜色</label>
         <ColorPicker />
-      </label>
+      </div>
     </>
   );
 };

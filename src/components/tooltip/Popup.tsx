@@ -6,9 +6,10 @@ interface IProps {
   left: number;
   height: number;
   visible: boolean;
+  title: React.ReactNode;
 }
 
-const Popup: React.FC<IProps> = ({ top, left, height, visible }) => {
+const Popup: React.FC<IProps> = ({ top, left, height, visible, title }) => {
   console.log(top, left, height, visible, 1111);
   return createPortal(
     <div
@@ -17,9 +18,10 @@ const Popup: React.FC<IProps> = ({ top, left, height, visible }) => {
         left,
         display: visible ? 'block' : 'none',
         position: 'absolute',
+        zIndex: 1000,
       }}
     >
-      Popup
+      {title}
     </div>,
     document.body,
   );
