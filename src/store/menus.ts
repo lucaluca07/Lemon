@@ -39,7 +39,12 @@ const initialState: MenuState = {
       icon: 'calendar',
     },
   ],
-  projects: [],
+  projects: [
+    {
+      id: 'test',
+      name: '测试项目',
+    },
+  ],
 };
 
 const projectsSlice = createSlice({

@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { RootState } from 'src/store/reducer';
 import Menu, { SubMenu, MenuItem } from 'src/components/menu';
+import CommonAdd from 'src/components/common-add';
 import { addProject } from 'src/store/menus';
 import Modal from 'src/components/modal';
 import ModalContent from './ModalContent';
@@ -65,11 +66,11 @@ const SideBar: React.FC = () => {
               <span>暂无项目</span>
             </div>
           )}
-          <div className="add-project actions" onClick={() => setVisible(true)}>
-            <i className="iconfont icon-icon_add_round menu-icon" />
-            <i className="iconfont icon-icon_add_fill menu-icon" />
-            <span>添加项目</span>
-          </div>
+          <CommonAdd
+            className="add-project"
+            name="添加项目"
+            onClick={() => setVisible(true)}
+          />
         </SubMenu>
       </Menu>
       <Modal
