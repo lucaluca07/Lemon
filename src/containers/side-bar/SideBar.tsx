@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { RootState } from 'src/store/reducer';
@@ -8,22 +8,20 @@ import Modal from 'src/components/modal';
 import ModalContent from './ModalContent';
 
 const SideBar: React.FC = () => {
+  const [name, setName] = useState('');
+  const [visible, setVisible] = useState(false);
   const menus = useSelector((state: RootState) => state.menus);
+  const dispatch = useDispatch();
   const history = useHistory();
   const { bases, projects } = menus;
 
-  const content = useMemo(() => {
-    return <ModalContent />;
-  }, []);
+  const handleOk = useCallback(() => {
+    dispatch(addProject(name));
+    setName('');
+    setVisible(false);
+  }, [name]);
 
-  const { open } = Modal.useModal({
-    visible: false,
-    header: '添加项目',
-    content,
-    onOk: () => {},
-  });
   const location = useLocation();
-
   const defaultSelectedKeys = useMemo(() => {
     const menuPaths = [...bases, ...projects].map((menu) => `/${menu.id}`);
     const pathname = location.pathname;
@@ -57,17 +55,37 @@ const SideBar: React.FC = () => {
           {!!projects.length &&
             projects.map((item) => (
               <MenuItem eventKey={`/project/${item.id}`} key={item.id}>
+                <i className="iconfont icon-drag menu-icon drag-element" />
                 {item.name}
               </MenuItem>
             ))}
-          {!projects.length && <span className="empty">暂无项目</span>}
-          <div className="add-project actions" onClick={open}>
+          {!projects.length && (
+            <div className="empty">
+              <i className="iconfont icon-empty" />
+              <span>暂无项目</span>
+            </div>
+          )}
+          <div className="add-project actions" onClick={() => setVisible(true)}>
             <i className="iconfont icon-icon_add_round menu-icon" />
             <i className="iconfont icon-icon_add_fill menu-icon" />
             <span>添加项目</span>
           </div>
         </SubMenu>
       </Menu>
+      <Modal
+        visible={visible}
+        header="添加项目"
+        onCancel={() => setVisible(false)}
+        onOk={handleOk}
+      >
+        <ModalContent
+          onChange={(type, value) => {
+            if (type === 'name') {
+              setName(value);
+            }
+          }}
+        />
+      </Modal>
     </div>
   );
 };

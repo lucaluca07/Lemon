@@ -5,8 +5,27 @@ interface ModalProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
   onCancel: () => void;
+  onOk: () => void;
   visible: boolean;
 }
+
+interface FooterProps {
+  onOk: () => void;
+  onCancel: () => void;
+}
+
+const DefaultFooter: React.FC<FooterProps> = ({ onOk, onCancel }) => {
+  return (
+    <>
+      <button className="modal-cancel" onClick={onCancel}>
+        取消
+      </button>
+      <button className="modal-ok" onClick={onOk}>
+        确定
+      </button>
+    </>
+  );
+};
 
 const Modal: React.FC<ModalProps> = ({
   children,
@@ -14,6 +33,7 @@ const Modal: React.FC<ModalProps> = ({
   footer,
   visible,
   onCancel,
+  onOk,
 }) => {
   return (
     <div className="modal-root">
@@ -27,7 +47,9 @@ const Modal: React.FC<ModalProps> = ({
         <div onClick={(e) => e.stopPropagation()} className="modal">
           {header && <div className="modal-header">{header}</div>}
           <div className="modal-content">{children}</div>
-          {footer && <div className="modal-footer">{footer}</div>}
+          <div className="modal-footer">
+            {footer || <DefaultFooter onOk={onOk} onCancel={onCancel} />}
+          </div>
           <button className="modal-close" onClick={onCancel}>
             <i className="iconfont icon-close" />
           </button>

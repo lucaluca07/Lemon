@@ -47,6 +47,7 @@ const projectsSlice = createSlice({
   initialState,
   reducers: {
     addProject(state, action) {
+      console.log(action, 'addProject');
       state.projects = [
         ...state.projects,
         { id: String(Date.now()), name: action.payload },

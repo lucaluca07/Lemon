@@ -1,48 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from './Modal';
-import useModal from './useModal';
 import './style.less';
 
 interface FnProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  content: React.ReactNode;
   visible: boolean;
+  onOk: () => void;
+  onCancel: () => void;
 }
 
-const info = (config: FnProps) => {
-  const div = document.createElement('div');
-  document.body.appendChild(div);
-
-  function render() {
-    ReactDOM.createPortal(
-      <Modal {...config} onCancel={destory}>
-        {config.content}
-      </Modal>,
-      div,
-    );
-  }
-
-  function destory() {
-    const unmountResult = ReactDOM.unmountComponentAtNode(div);
-    if (unmountResult && div.parentNode) {
-      div.parentNode.removeChild(div);
-    }
-  }
-
-  function update() {
-    render();
-  }
-
-  render();
-  return {
-    destory,
-    update,
-  };
+const Index: React.FC<FnProps> = ({
+  header,
+  footer,
+  children,
+  onOk,
+  visible,
+  onCancel,
+}) => {
+  return ReactDOM.createPortal(
+    <Modal
+      visible={visible}
+      onOk={onOk}
+      onCancel={onCancel}
+      header={header}
+      footer={footer}
+    >
+      {children}
+    </Modal>,
+    document.body,
+  );
 };
-
-export default {
-  info,
-  useModal,
-};
+export default Index;
