@@ -12,7 +12,11 @@ export interface TaskState {
 }
 
 const initialState: TaskState = {
-  tasks: [],
+  tasks: [1, 2, 3, 4, 5, 6].map((item) => ({
+    id: String(item),
+    title: '测试 task' + item,
+    completed: false,
+  })),
 };
 
 const tasksSlice = createSlice({

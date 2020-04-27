@@ -1,0 +1,33 @@
+.task {
+  list-style: none;
+  position: relative;
+  &-details {
+    display: flex;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 21px;
+    align-items: center;
+  }
+  &-drag {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    left: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px;
+    cursor: move;
+    .iconfont {
+      display: none;
+    }
+  }
+  &-title {
+    margin-left: 8px;
+  }
+  &:hover {
+    .task-drag .iconfont {
+      display: block;
+    }
+  }
+}
