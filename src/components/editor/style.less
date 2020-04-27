@@ -1,0 +1,44 @@
+.editor {
+  padding: 4px 0;
+  background: none;
+  margin-bottom: 9px;
+
+  &-details {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    border-collapse: separate;
+    margin-bottom: 6px;
+    .DraftEditor-root {
+      padding: 8px;
+      line-height: 21px;
+      border-right: 1px solid #ddd;
+      flex: 1;
+    }
+  }
+
+  &-assign {
+    display: flex;
+    flex-shrink: 0;
+    padding: 0 8px;
+  }
+
+  &-assign-due {
+    width: 126px;
+    border: none;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #999;
+    outline: none;
+  }
+
+  &-actions {
+    display: flex;
+  }
+  &-sub-actions {
+    margin-left: auto;
+    order: 3;
+  }
+}

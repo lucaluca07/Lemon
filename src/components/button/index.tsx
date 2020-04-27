@@ -1,7 +1,4 @@
-import React from 'react';
-
-const Button: React.FC = ({ children, ...rest }) => {
-  return <button {...rest}>{children}</button>;
-};
+import Button from './Button';
+import './style.less';
 
 export default Button;
