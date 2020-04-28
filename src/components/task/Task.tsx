@@ -6,16 +6,22 @@ interface IProps {
   id: string;
   title: string;
   completed: boolean;
+  updateTaskStatus: (id: string, completed: boolean) => void;
 }
 
-const Task: React.FC<IProps> = ({ id, title, completed }) => {
+const Task: React.FC<IProps> = ({ id, title, completed, updateTaskStatus }) => {
   return (
     <li className={classNames('task', { 'task-completed': completed })}>
       <div className="task-drag">
         <i className="iconfont icon-drag" />
       </div>
       <div className="task-details">
-        <Checkbox />
+        <Checkbox
+          checked={completed}
+          onChange={(completed) => {
+            updateTaskStatus?.(id, completed);
+          }}
+        />
         <span className="task-title">{title}</span>
       </div>
     </li>

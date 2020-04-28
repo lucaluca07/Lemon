@@ -31,9 +31,9 @@ function keyBindingFn(e: any): string {
 const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
   const [editorState, setEditorState] = useState(emptyState);
   const editorRef = useRef<any>(null);
-  const text = useMemo(() => editorState.getCurrentContent().getPlainText(), [
-    editorState,
-  ]);
+  const text = useMemo(() => {
+    return editorState.getCurrentContent().getPlainText();
+  }, [editorState]);
 
   const handleKeyCommand = useCallback(
     (command: string): any => {
@@ -49,6 +49,13 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
   useEffect(() => {
     editorRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    const reg = /^今天/;
+    if (reg.test(text)) {
+      console.log(11111);
+    }
+  }, [text]);
   return (
     <div className="editor">
       <div className="editor-details">

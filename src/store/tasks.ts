@@ -31,13 +31,12 @@ const tasksSlice = createSlice({
       ];
     },
     updateTask(state, action) {
-      const { id, title, completed } = action.payload;
-      const task = state.tasks.find((task) => task.id === id);
-      if (task) {
-        task.title = title;
-        task.completed = completed;
+      const { id, ...rest } = action.payload;
+      let index = state.tasks.findIndex((task) => task.id === id);
+      if (index > -1) {
+        let task = state.tasks[index];
+        state.tasks[index] = { ...task, ...rest };
       }
-      state.tasks = [...state.tasks];
     },
     deleteTask(state, action) {
       const tasks = state.tasks.filter((task) => task.id !== action.payload);
