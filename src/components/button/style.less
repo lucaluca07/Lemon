@@ -14,6 +14,7 @@
   color: #202020;
   text-decoration: none;
   text-align: center;
+  outline: none;
 
   &-type-primary {
     background-color: #3d3d3d;
@@ -28,6 +29,25 @@
     font-weight: 500;
     &[disabled] {
       color: rgba(0, 0, 0, 0.25);
+      background-color: transparent;
+      border-color: transparent;
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+  &-type-icon {
+    padding: 6px 8px 2px;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    font-weight: 500;
+    .iconfont {
+      color: #555;
+    }
+    &[disabled] {
+      .iconfont {
+        color: rgba(0, 0, 0, 0.25);
+      }
       background-color: transparent;
       border-color: transparent;
       text-shadow: none;

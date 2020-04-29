@@ -10,6 +10,7 @@ import {
   EditorState,
   getDefaultKeyBinding,
 } from 'draft-js';
+import Tooltip from '../tooltip';
 import Button from '../button';
 import 'draft-js/dist/Draft.css';
 
@@ -91,10 +92,26 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
           取消
         </Button>
         <div className="editor-sub-actions">
-          <button>project</button>
-          <button>Tag</button>
-          <button>Order</button>
-          <button>tip</button>
+          <Tooltip title="选择项目">
+            <Button type="icon">
+              <i className="iconfont icon-send" />
+            </Button>
+          </Tooltip>
+          <Tooltip title="添加标签">
+            <Button type="icon">
+              <i className="iconfont icon-tag1" />
+            </Button>
+          </Tooltip>
+          <Tooltip title="设置优先级">
+            <Button type="icon">
+              <i className="iconfont icon-priority3" />
+            </Button>
+          </Tooltip>
+          <Tooltip title="添加提醒">
+            <Button type="icon">
+              <i className="iconfont icon-naozhong" />
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </div>

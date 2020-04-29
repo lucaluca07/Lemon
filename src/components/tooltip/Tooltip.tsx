@@ -5,11 +5,12 @@ let tooltipIndex = 0;
 
 interface IProps {
   title: React.ReactNode;
+  trigger?: 'click' | 'hover';
 }
 
-const Tooltip: React.FC<IProps> = ({ children, title }) => {
+const Tooltip: React.FC<IProps> = ({ children, title, trigger = 'hover' }) => {
   const [visible, setVisible] = useState(false);
-  const [rect, setRect] = useState({ height: 0, left: 0, top: 0 });
+  const [rect, setRect] = useState({ height: 0, left: 0, top: 0, width: 0 });
   const fireEvents = useCallback(
     (type: string, e: Event) => {
       const childCallback = (children as React.ReactElement).props[type];
@@ -38,8 +39,8 @@ const Tooltip: React.FC<IProps> = ({ children, title }) => {
     } else {
       const triggerNode = document.querySelector(`.${cl}`);
       if (!triggerNode) return;
-      const { top, height, left } = triggerNode.getBoundingClientRect();
-      setRect({ top, height, left });
+      const { top, height, left, width } = triggerNode.getBoundingClientRect();
+      setRect({ top, height, left, width });
       setVisible(true);
     }
   }, [visible, cl]);
@@ -47,9 +48,31 @@ const Tooltip: React.FC<IProps> = ({ children, title }) => {
   const onClick = useCallback(
     (event) => {
       fireEvents('onClick', event);
+      if (trigger === 'hover') return;
       toggleVisible();
     },
-    [toggleVisible],
+    [toggleVisible, trigger],
+  );
+
+  const onMouseOver = useCallback(
+    (event) => {
+      fireEvents('onMouseOver', event);
+      if (trigger === 'click') return;
+      const triggerNode = document.querySelector(`.${cl}`);
+      if (!triggerNode) return;
+      const { top, height, left, width } = triggerNode.getBoundingClientRect();
+      setRect({ top, height, left, width });
+      setVisible(true);
+    },
+    [cl, trigger],
+  );
+  const onMouseLeave = useCallback(
+    (event) => {
+      fireEvents('onMouseLeave', event);
+      if (trigger === 'click') return;
+      setVisible(false);
+    },
+    [trigger],
   );
 
   return (
@@ -57,6 +80,8 @@ const Tooltip: React.FC<IProps> = ({ children, title }) => {
       {React.cloneElement(child, {
         onClick,
         className,
+        onMouseOver,
+        onMouseLeave,
       })}
       <Popup {...rect} title={title} visible={visible} />
     </>

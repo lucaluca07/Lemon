@@ -2,7 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface BaseButtonProps {
-  type?: 'default' | 'primary' | 'ghost' | 'dashed' | 'danger' | 'link';
+  type?:
+    | 'default'
+    | 'primary'
+    | 'ghost'
+    | 'dashed'
+    | 'danger'
+    | 'link'
+    | 'icon';
   size?: 'default' | 'large' | 'small';
   className?: string;
   children: React.ReactNode;

@@ -1,0 +1,35 @@
+.popup {
+  position: absolute;
+  z-index: 1000;
+  font-size: 14px;
+  &-inner {
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 3px;
+    color: #fff;
+  }
+  &-arrow {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    height: 8px;
+    width: 8px;
+    overflow: hidden;
+    transform: translate(-50%);
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: 5px;
+      height: 5px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.75);
+      content: '';
+      pointer-events: auto;
+      transform: translateY(3.5px) rotate(45deg);
+    }
+  }
+}
