@@ -1,26 +1,11 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { createPopper, Instance } from '@popperjs/core';
-interface IProps {
-  visible?: boolean;
-  title: React.ReactNode | string;
-}
-
-const Tooltip: React.FC<IProps> = ({ children, title }) => {
+const Example: React.FC = ({ children }) => {
   const popperRef = useRef<HTMLDivElement>(null);
   const instanceRef = useRef<{ instance: Instance | null }>({ instance: null });
 
-  const fireEvents = useCallback(
-    (type: string, e: Event) => {
-      const childCallback = (children as React.ReactElement).props[type];
-      if (childCallback) {
-        childCallback(e);
-      }
-    },
-    [children],
-  );
-
-  const onMouseEnter = useCallback(
+  const onClick = useCallback(
     (event) => {
       const referenceElement = event.currentTarget;
       const popperElement = popperRef.current;
@@ -34,39 +19,34 @@ const Tooltip: React.FC<IProps> = ({ children, title }) => {
               {
                 name: 'offset',
                 options: {
-                  offset: [0, 8],
+                  offset: [0, 4],
                 },
               },
             ],
           },
         );
       }
-      popperElement.setAttribute('data-show', 'visible');
+      if (popperElement.getAttribute('data-show')) {
+        popperElement.removeAttribute('data-show');
+      } else {
+        popperElement.setAttribute('data-show', 'visible');
+      }
     },
-    [popperRef.current],
-  );
-  const onMouseLeave = useCallback(
-    (event) => {
-      fireEvents('onMouseLeave', event);
-      const popperElement = popperRef.current;
-      if (!popperElement) return;
-      popperElement.removeAttribute('data-show');
-    },
-    [popperRef.current],
+    [children, popperRef.current],
   );
 
   const childNode = useMemo(() => {
     const child = React.Children.only(children) as React.ReactElement;
-    return React.cloneElement(child, { onMouseLeave, onMouseEnter });
-  }, [onMouseLeave, onMouseEnter, children]);
+    return React.cloneElement(child, { onClick });
+  }, [onClick, children]);
 
   return (
     <>
       {childNode}
       {ReactDOM.createPortal(
-        <div className="tooltip" ref={popperRef} role="tooltip">
+        <div className="popover" ref={popperRef} role="popover">
           <div className="arrow" data-popper-arrow />
-          <span>{title}</span>
+          <span>Popper</span>
         </div>,
         document.body,
       )}
@@ -74,4 +54,4 @@ const Tooltip: React.FC<IProps> = ({ children, title }) => {
   );
 };
 
-export default Tooltip;
+export default Example;

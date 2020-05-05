@@ -10,8 +10,9 @@ import {
   EditorState,
   getDefaultKeyBinding,
 } from 'draft-js';
-import Tooltip from '../tooltip';
+import Popover from '../popover';
 import Button from '../button';
+
 import 'draft-js/dist/Draft.css';
 
 interface IProps {
@@ -92,26 +93,26 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
           取消
         </Button>
         <div className="editor-sub-actions">
-          <Tooltip title="选择项目">
-            <Button type="icon">
+          <Popover>
+            <Button title="选择项目" onClick={(event) => {}} type="icon">
               <i className="iconfont icon-send" />
             </Button>
-          </Tooltip>
-          <Tooltip title="添加标签">
-            <Button type="icon">
+          </Popover>
+          <Popover>
+            <Button title="添加标签" type="icon">
               <i className="iconfont icon-tag1" />
             </Button>
-          </Tooltip>
-          <Tooltip title="设置优先级">
-            <Button type="icon">
+          </Popover>
+          <Popover>
+            <Button title="设置优先级" type="icon">
               <i className="iconfont icon-priority3" />
             </Button>
-          </Tooltip>
-          <Tooltip title="添加提醒">
-            <Button type="icon">
+          </Popover>
+          <Popover>
+            <Button title="添加提醒" type="icon">
               <i className="iconfont icon-naozhong" />
             </Button>
-          </Tooltip>
+          </Popover>
         </div>
       </div>
     </div>
