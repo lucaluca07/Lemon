@@ -10,8 +10,9 @@ import {
   EditorState,
   getDefaultKeyBinding,
 } from 'draft-js';
-import Popover from '../popover';
-import Button from '../button';
+import Popover from 'src/components/popover';
+import Button from 'src/components/button';
+import Projects from './Projects';
 
 import 'draft-js/dist/Draft.css';
 
@@ -33,6 +34,7 @@ function keyBindingFn(e: any): string {
 const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
   const [editorState, setEditorState] = useState(emptyState);
   const editorRef = useRef<any>(null);
+
   const text = useMemo(() => {
     return editorState.getCurrentContent().getPlainText();
   }, [editorState]);
@@ -52,12 +54,6 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
     editorRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    const reg = /^今天/;
-    if (reg.test(text)) {
-      console.log(11111);
-    }
-  }, [text]);
   return (
     <div className="editor">
       <div className="editor-details">
@@ -93,22 +89,22 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
           取消
         </Button>
         <div className="editor-sub-actions">
-          <Popover>
-            <Button title="选择项目" onClick={(event) => {}} type="icon">
+          <Popover content={<Projects />}>
+            <Button title="选择项目" type="icon">
               <i className="iconfont icon-send" />
             </Button>
           </Popover>
-          <Popover>
+          <Popover content="选择项目">
             <Button title="添加标签" type="icon">
               <i className="iconfont icon-tag1" />
             </Button>
           </Popover>
-          <Popover>
+          <Popover content="选择项目">
             <Button title="设置优先级" type="icon">
               <i className="iconfont icon-priority3" />
             </Button>
           </Popover>
-          <Popover>
+          <Popover content="选择项目">
             <Button title="添加提醒" type="icon">
               <i className="iconfont icon-naozhong" />
             </Button>

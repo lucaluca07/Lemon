@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'src/store/reducer';
-import Editor from 'src/components/editor';
+import Editor from 'src/containers/editor';
 import CommonAdd from 'src/components/common-add';
 import Tasks from 'src/components/tasks';
 import { addTask, updateTask } from 'src/store/tasks';
