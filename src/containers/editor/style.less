@@ -41,4 +41,42 @@
     margin-left: auto;
     order: 3;
   }
+
+  &-choose-project {
+    width: 275px;
+  }
+  &-projects {
+    list-style: none;
+    padding: 0;
+    border-collapse: collapse;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+  }
+
+  &-project,
+  &-add-project,
+  &-project-empty {
+    cursor: pointer;
+    padding: 8px 10px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &-add-project {
+    &:hover {
+      background: #fafafa;
+    }
+  }
+
+  &-project-empty {
+    color: #999;
+  }
+
+  &-add-project-content {
+    margin-left: 8px;
+    font-weight: 500;
+  }
 }

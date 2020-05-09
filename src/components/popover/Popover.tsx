@@ -1,19 +1,20 @@
-import React, { useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { createPopper, Instance } from '@popperjs/core';
 
 interface IProps {
   content: React.ReactNode;
   trigger?: 'click' | 'focus';
-  visible?: boolean;
+  style?: React.CSSProperties;
 }
 
 const Example: React.FC<IProps> = ({
   children,
   content,
   trigger = 'click',
-  visible,
+  style,
 }) => {
+  const [visible, setVisible] = useState(false);
   const popperRef = useRef<HTMLDivElement>(null);
   const instanceRef = useRef<{ instance: Instance | null }>({ instance: null });
 
@@ -41,8 +42,10 @@ const Example: React.FC<IProps> = ({
       }
       if (popperElement.getAttribute('data-show')) {
         popperElement.removeAttribute('data-show');
+        setVisible(false);
       } else {
         popperElement.setAttribute('data-show', 'visible');
+        setVisible(true);
       }
     },
     [children, popperRef.current, trigger],
@@ -71,6 +74,7 @@ const Example: React.FC<IProps> = ({
         );
       }
       popperElement.setAttribute('data-show', 'visible');
+      setVisible(true);
     },
     [children, popperRef.current, trigger],
   );
@@ -80,6 +84,7 @@ const Example: React.FC<IProps> = ({
     const popperElement = popperRef.current;
     if (!popperElement) return;
     popperElement.removeAttribute('data-show');
+    setVisible(false);
   }, [children, popperRef.current, trigger]);
 
   const handleClickPopover = useCallback(
@@ -88,6 +93,7 @@ const Example: React.FC<IProps> = ({
       const popperElement = popperRef.current;
       if (popperElement && target.hasAttribute('data-popover-closeable')) {
         popperElement.removeAttribute('data-show');
+        setVisible(false);
       }
     },
     [popperRef.current],
@@ -107,9 +113,10 @@ const Example: React.FC<IProps> = ({
           onClick={handleClickPopover}
           ref={popperRef}
           role="popover"
+          style={style}
         >
           <div className="arrow" data-popper-arrow />
-          <div className="popover-content">{content}</div>
+          <div className="popover-content">{visible ? content : null}</div>
         </div>,
         document.body,
       )}
