@@ -17,7 +17,7 @@ const SideBar: React.FC = () => {
   const { bases, projects } = menus;
 
   const handleOk = useCallback(() => {
-    dispatch(addProject(name));
+    dispatch(addProject({ name }));
     setName('');
     setVisible(false);
   }, [name]);

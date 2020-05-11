@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 import { RootState } from 'src/store/reducer';
 import Input from 'src/components/input';
 import Icon from 'src/components/icon';
@@ -13,12 +14,15 @@ import { addProject } from 'src/store/menus';
 
 const Projects: React.FC = () => {
   const [name, setName] = useState('');
+  const [selectedProject, setSelectedProject] = useState('');
   const { projects } = useSelector((state: RootState) => state.menus);
   const dispatch = useDispatch();
   const inputRef = useRef<{ focus: () => void }>(null);
 
   const handleAdd = useCallback(() => {
-    dispatch(addProject(name));
+    const id = String(Date.now());
+    setSelectedProject(id);
+    dispatch(addProject({ id, name }));
     setName('');
   }, [name, dispatch]);
 
@@ -54,7 +58,9 @@ const Projects: React.FC = () => {
         <ul className="editor-projects">
           {projectList.map((project) => (
             <li
-              className="editor-project"
+              className={classNames('editor-project', {
+                'editor-project-selected': project.id === selectedProject,
+              })}
               data-popover-closeable
               onClick={() => {
                 console.log(project.id);

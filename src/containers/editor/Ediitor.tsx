@@ -89,7 +89,11 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
           取消
         </Button>
         <div className="editor-sub-actions">
-          <Popover style={{ padding: 0 }} content={<Projects />}>
+          <Popover
+            clickContentHide
+            style={{ padding: 0 }}
+            content={<Projects />}
+          >
             <Button title="选择项目" type="icon">
               <i className="iconfont icon-send" />
             </Button>

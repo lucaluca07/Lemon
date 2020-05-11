@@ -52,10 +52,10 @@ const projectsSlice = createSlice({
   initialState,
   reducers: {
     addProject(state, action) {
-      console.log(action, 'addProject');
+      const { id, name } = action.payload;
       state.projects = [
         ...state.projects,
-        { id: String(Date.now()), name: action.payload },
+        { id: id || String(Date.now()), name },
       ];
     },
     updateProject(state, action) {

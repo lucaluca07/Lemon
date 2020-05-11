@@ -6,6 +6,7 @@ interface IProps {
   content: React.ReactNode;
   trigger?: 'click' | 'focus';
   style?: React.CSSProperties;
+  clickContentHide?: boolean;
 }
 
 const Example: React.FC<IProps> = ({
@@ -13,6 +14,7 @@ const Example: React.FC<IProps> = ({
   content,
   trigger = 'click',
   style,
+  clickContentHide,
 }) => {
   const [visible, setVisible] = useState(false);
   const popperRef = useRef<HTMLDivElement>(null);
@@ -87,17 +89,12 @@ const Example: React.FC<IProps> = ({
     setVisible(false);
   }, [children, popperRef.current, trigger]);
 
-  const handleClickPopover = useCallback(
-    (event) => {
-      const target = event.target as HTMLElement;
-      const popperElement = popperRef.current;
-      if (popperElement && target.hasAttribute('data-popover-closeable')) {
-        popperElement.removeAttribute('data-show');
-        setVisible(false);
-      }
-    },
-    [popperRef.current],
-  );
+  const handleClickPopover = useCallback(() => {
+    const popperElement = popperRef.current;
+    if (!clickContentHide || !popperElement) return;
+    popperElement.removeAttribute('data-show');
+    setVisible(false);
+  }, [clickContentHide, popperRef.current]);
 
   const childNode = useMemo(() => {
     const child = React.Children.only(children) as React.ReactElement;
