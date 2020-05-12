@@ -34,8 +34,8 @@ const Main: React.FC = () => {
       )}
       {showInput && (
         <Editor
-          onSubmit={(title) => {
-            dispatch(addTask({ title }));
+          onSubmit={({ title, projectId }) => {
+            dispatch(addTask({ title, projectId }));
             setShowInput(false);
           }}
           onCancel={() => setShowInput(false)}

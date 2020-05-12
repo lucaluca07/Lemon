@@ -12,7 +12,11 @@ import Input from 'src/components/input';
 import Icon from 'src/components/icon';
 import { addProject } from 'src/store/menus';
 
-const Projects: React.FC = () => {
+interface IProps {
+  onSelectedProject: (param: { id: string; name?: string }) => void;
+}
+
+const Projects: React.FC<IProps> = ({ onSelectedProject }) => {
   const [name, setName] = useState('');
   const [selectedProject, setSelectedProject] = useState('');
   const { projects } = useSelector((state: RootState) => state.menus);
@@ -23,6 +27,7 @@ const Projects: React.FC = () => {
     const id = String(Date.now());
     setSelectedProject(id);
     dispatch(addProject({ id, name }));
+    onSelectedProject({ id, name });
     setName('');
   }, [name, dispatch]);
 
@@ -46,6 +51,7 @@ const Projects: React.FC = () => {
         onChange={(e) => setName(e.target.value)}
         value={name}
         placeholder="输入一个项目"
+        onClick={(e) => e.stopPropagation()}
         style={{
           border: 'none',
           borderBottom: '1px solid #eee',
@@ -63,7 +69,8 @@ const Projects: React.FC = () => {
               })}
               data-popover-closeable
               onClick={() => {
-                console.log(project.id);
+                const { id, name } = project;
+                onSelectedProject({ id, name });
               }}
               key={project.id}
             >

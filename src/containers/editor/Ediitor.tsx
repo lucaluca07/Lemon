@@ -17,9 +17,19 @@ import Projects from './Projects';
 import 'draft-js/dist/Draft.css';
 
 interface IProps {
-  onSubmit: (text: string) => void;
+  onSubmit: (params: {
+    title: string;
+    projectId: string;
+    tags?: string[];
+    date?: number;
+  }) => void;
   onCancel: () => void;
   // value: string;
+}
+
+interface IProject {
+  id: string;
+  name?: string;
 }
 
 const emptyState = EditorState.createEmpty();
@@ -33,21 +43,30 @@ function keyBindingFn(e: any): string {
 
 const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
   const [editorState, setEditorState] = useState(emptyState);
+  const [project, setProject] = useState<IProject>({ id: '' });
   const editorRef = useRef<any>(null);
 
-  const text = useMemo(() => {
+  const title = useMemo(() => {
     return editorState.getCurrentContent().getPlainText();
   }, [editorState]);
+
+  const setCurrentProject = ({ id, name }: IProject) => {
+    setProject({ id, name });
+  };
+
+  const handleSubmit = useCallback(() => {
+    onSubmit({ title, projectId: project.id });
+  }, [title, onSubmit, project]);
 
   const handleKeyCommand = useCallback(
     (command: string): any => {
       if (command === 'save') {
-        onSubmit(text);
+        handleSubmit();
         return 'handled';
       }
       return 'not-handled';
     },
-    [text],
+    [title],
   );
 
   useEffect(() => {
@@ -72,10 +91,8 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
         <Button
           className="editor-submit"
           type="primary"
-          disabled={!text}
-          onClick={() => {
-            onSubmit(text);
-          }}
+          disabled={!title}
+          onClick={handleSubmit}
         >
           添加任务
         </Button>
@@ -92,7 +109,7 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
           <Popover
             clickContentHide
             style={{ padding: 0 }}
-            content={<Projects />}
+            content={<Projects onSelectedProject={setCurrentProject} />}
           >
             <Button title="选择项目" type="icon">
               <i className="iconfont icon-send" />

@@ -5,6 +5,8 @@ interface BaseTask {
   title: string;
   date?: number;
   completed: boolean;
+  projectId: string;
+  tags?: string[];
 }
 
 export interface TaskState {
@@ -16,6 +18,7 @@ const initialState: TaskState = {
     id: String(item),
     title: '测试 task' + item,
     completed: false,
+    projectId: 'inbox',
   })),
 };
 
@@ -24,10 +27,10 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {
     addTask(state, action) {
-      const { title } = action.payload;
+      const { title, projectId } = action.payload;
       state.tasks = [
         ...state.tasks,
-        { id: String(Date.now()), title, completed: false },
+        { id: String(Date.now()), title, projectId, completed: false },
       ];
     },
     updateTask(state, action) {

@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 import ReactDOM from 'react-dom';
 import { createPopper, Instance } from '@popperjs/core';
 
@@ -52,6 +58,17 @@ const Example: React.FC<IProps> = ({
     },
     [children, popperRef.current, trigger],
   );
+
+  useEffect(() => {
+    window.addEventListener('mousedown', (e) => {
+      const popperElement = popperRef.current;
+      if (!popperElement) return;
+      const node = e.target as HTMLElement;
+      if (!popperElement.contains(node)) {
+        popperElement.removeAttribute('data-show');
+      }
+    });
+  }, [popperRef.current]);
 
   const onFocus = useCallback(
     (event) => {

@@ -52,7 +52,7 @@ const Button: React.FC<ButtonProps> = ({
       }
       btnRef?.current?.removeAttribute('data-title');
     },
-    [btnRef.current, timerRef.current],
+    [btnRef.current, timerRef.current, onClick],
   );
   return (
     <button
