@@ -24,7 +24,10 @@ const SideBar: React.FC = () => {
 
   const location = useLocation();
   const defaultSelectedKeys = useMemo(() => {
-    const menuPaths = [...bases, ...projects].map((menu) => `/${menu.id}`);
+    const menuPaths = [
+      ...bases.map((menu) => `/${menu.id}`),
+      ...projects.map((project) => `/project/${project.id}`),
+    ];
     const pathname = location.pathname;
     if (menuPaths.includes(pathname)) return [pathname];
     return ['/inbox'];

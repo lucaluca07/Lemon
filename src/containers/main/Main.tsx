@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'src/store/reducer';
+import { useDispatch } from 'react-redux';
+import useSelectorTask from 'src/hooks/useSelectedTask';
 import Editor from 'src/containers/editor';
 import CommonAdd from 'src/components/common-add';
 import Tasks from 'src/components/tasks';
@@ -8,7 +8,7 @@ import { addTask, updateTask } from 'src/store/tasks';
 
 const Main: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
-  const { tasks } = useSelector((state: RootState) => state.tasks);
+  const tasks = useSelectorTask();
   const dispatch = useDispatch();
   const updateTaskStatus = useCallback(
     (id, completed) => {
