@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import useSelectorTask from 'src/hooks/useSelectedTask';
 import Editor from 'src/containers/editor';
 import CommonAdd from 'src/components/common-add';
@@ -10,6 +11,7 @@ const Main: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
   const tasks = useSelectorTask();
   const dispatch = useDispatch();
+  const history = useHistory();
   const updateTaskStatus = useCallback(
     (id, completed) => {
       dispatch(updateTask({ id, completed }));
@@ -21,7 +23,11 @@ const Main: React.FC = () => {
       <header className="main-header">
         <h1>test</h1>
       </header>
-      <Tasks tasks={tasks} updateTaskStatus={updateTaskStatus} />
+      <Tasks
+        tasks={tasks}
+        onClick={(id: string) => history.push(`?taskId=${id}`)}
+        updateTaskStatus={updateTaskStatus}
+      />
       {!showInput && (
         <CommonAdd
           name="添加任务"

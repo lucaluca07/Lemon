@@ -27,11 +27,13 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {
     addTask(state, action) {
-      const { title, projectId } = action.payload;
-      state.tasks = [
-        ...state.tasks,
-        { id: String(Date.now()), title, projectId, completed: false },
-      ];
+      const { title, projectId = 'inbox' } = action.payload;
+      state.tasks.push({
+        id: String(Date.now()),
+        title,
+        projectId,
+        completed: false,
+      });
     },
     updateTask(state, action) {
       const { id, ...rest } = action.payload;

@@ -57,12 +57,14 @@ const SideBar: React.FC = () => {
         })}
         <SubMenu title="项目" eventKey="projects">
           {!!projects.length &&
-            projects.map((item) => (
-              <MenuItem eventKey={`/project/${item.id}`} key={item.id}>
-                <i className="iconfont icon-drag menu-icon drag-element" />
-                {item.name}
-              </MenuItem>
-            ))}
+            projects
+              .filter((item) => !item.hide)
+              .map((item) => (
+                <MenuItem eventKey={`/project/${item.id}`} key={item.id}>
+                  <i className="iconfont icon-drag menu-icon drag-element" />
+                  {item.name}
+                </MenuItem>
+              ))}
           {!projects.length && (
             <div className="empty">
               <i className="iconfont icon-empty" />

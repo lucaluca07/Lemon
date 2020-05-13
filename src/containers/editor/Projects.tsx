@@ -13,21 +13,20 @@ import Icon from 'src/components/icon';
 import { addProject } from 'src/store/menus';
 
 interface IProps {
-  onSelectedProject: (param: { id: string; name?: string }) => void;
+  onChange: (param: { id: string; name?: string }) => void;
+  selectedId: string;
 }
 
-const Projects: React.FC<IProps> = ({ onSelectedProject }) => {
+const Projects: React.FC<IProps> = ({ onChange, selectedId }) => {
   const [name, setName] = useState('');
-  const [selectedProject, setSelectedProject] = useState('');
   const { projects } = useSelector((state: RootState) => state.menus);
   const dispatch = useDispatch();
   const inputRef = useRef<{ focus: () => void }>(null);
 
   const handleAdd = useCallback(() => {
     const id = String(Date.now());
-    setSelectedProject(id);
     dispatch(addProject({ id, name }));
-    onSelectedProject({ id, name });
+    onChange({ id, name });
     setName('');
   }, [name, dispatch]);
 
@@ -65,12 +64,12 @@ const Projects: React.FC<IProps> = ({ onSelectedProject }) => {
           {projectList.map((project) => (
             <li
               className={classNames('editor-project', {
-                'editor-project-selected': project.id === selectedProject,
+                'editor-project-selected': project.id === selectedId,
               })}
               data-popover-closeable
               onClick={() => {
                 const { id, name } = project;
-                onSelectedProject({ id, name });
+                onChange({ id, name });
               }}
               key={project.id}
             >

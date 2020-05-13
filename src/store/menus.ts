@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface BASE {
   id: string;
   name: string;
+  hide?: boolean;
 }
 
 interface Menu extends BASE {
@@ -40,6 +41,11 @@ const initialState: MenuState = {
     },
   ],
   projects: [
+    {
+      id: 'inbox',
+      name: '收件箱',
+      hide: true,
+    },
     {
       id: 'test',
       name: '测试项目',

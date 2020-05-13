@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { RootState } from 'src/store/reducer';
 
 const projects = ['inbox', 'project'];
@@ -16,7 +16,7 @@ const useSelectorTask = () => {
       return tasks.filter((task) => task.projectId === projectId);
     }
     return tasks;
-  }, [location.pathname]);
+  }, [location.pathname, tasks]);
 
   return currentTasks;
 };

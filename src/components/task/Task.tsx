@@ -7,11 +7,21 @@ interface IProps {
   title: string;
   completed: boolean;
   updateTaskStatus: (id: string, completed: boolean) => void;
+  onClick: (id: string) => void;
 }
 
-const Task: React.FC<IProps> = ({ id, title, completed, updateTaskStatus }) => {
+const Task: React.FC<IProps> = ({
+  id,
+  title,
+  completed,
+  updateTaskStatus,
+  onClick,
+}) => {
   return (
-    <li className={classNames('task', { 'task-completed': completed })}>
+    <li
+      onClick={() => onClick(id)}
+      className={classNames('task', { 'task-completed': completed })}
+    >
       <div className="task-drag">
         <i className="iconfont icon-drag" />
       </div>

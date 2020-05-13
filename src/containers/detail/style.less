@@ -1,3 +1,52 @@
 .detail {
-  width: 360px;
+  width: 36%;
+  transition: all 0.3s;
+  background: #fff;
+  border-left: 1px solid #eaeaea;
+  display: flex;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &-hide {
+    width: 0px;
+  }
+
+  &-header {
+    padding: 16px;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  &-body {
+    overflow: auto;
+    overflow-x: hidden;
+    flex: 1;
+    padding: 0 12px;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    .checkbox {
+      margin-right: 8px;
+    }
+    input {
+      font-size: 18px;
+      line-height: 21px;
+      font-weight: 700;
+      border: none;
+      outline: none;
+    }
+  }
+  &-footer {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    min-height: 38px;
+    justify-content: space-between;
+    border-top: 1px solid #eaeaea;
+  }
 }

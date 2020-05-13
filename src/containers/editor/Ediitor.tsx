@@ -12,6 +12,7 @@ import {
 } from 'draft-js';
 import Popover from 'src/components/popover';
 import Button from 'src/components/button';
+import useProject from 'src/hooks/useProject';
 import Projects from './Projects';
 
 import 'draft-js/dist/Draft.css';
@@ -42,8 +43,9 @@ function keyBindingFn(e: any): string {
 }
 
 const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
+  const defaultProjectId = useProject();
   const [editorState, setEditorState] = useState(emptyState);
-  const [project, setProject] = useState<IProject>({ id: '' });
+  const [project, setProject] = useState<IProject>({ id: defaultProjectId });
   const editorRef = useRef<any>(null);
 
   const title = useMemo(() => {
@@ -56,6 +58,7 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
 
   const handleSubmit = useCallback(() => {
     onSubmit({ title, projectId: project.id });
+    setProject({ id: defaultProjectId });
   }, [title, onSubmit, project]);
 
   const handleKeyCommand = useCallback(
@@ -109,7 +112,9 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
           <Popover
             clickContentHide
             style={{ padding: 0 }}
-            content={<Projects onSelectedProject={setCurrentProject} />}
+            content={
+              <Projects selectedId={project.id} onChange={setCurrentProject} />
+            }
           >
             <Button title="选择项目" type="icon">
               <i className="iconfont icon-send" />
