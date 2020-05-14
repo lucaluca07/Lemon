@@ -35,13 +35,6 @@ interface IProject {
 
 const emptyState = EditorState.createEmpty();
 
-function keyBindingFn(e: any): string {
-  if (e.keyCode === 13 /* `Enter` key */) {
-    return 'save';
-  }
-  return getDefaultKeyBinding(e) as any;
-}
-
 const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
   const defaultProjectId = useProject();
   const [editorState, setEditorState] = useState(emptyState);
@@ -56,15 +49,36 @@ const Editor: React.FC<IProps> = ({ onSubmit, onCancel }) => {
     setProject({ id, name });
   };
 
+  const keyBindingFn = useCallback(
+    (e: any): string => {
+      if (e.keyCode === 13 /* `Enter` key */) {
+        return 'save';
+      }
+      if (e.keyCode === 8 && !title) {
+        return 'cancel';
+      }
+      return getDefaultKeyBinding(e) as any;
+    },
+    [!title],
+  );
+
   const handleSubmit = useCallback(() => {
     onSubmit({ title, projectId: project.id });
     setProject({ id: defaultProjectId });
+    setEditorState(emptyState);
+    setTimeout(() => {
+      editorRef.current?.focus();
+    }, 0);
   }, [title, onSubmit, project]);
 
   const handleKeyCommand = useCallback(
     (command: string): any => {
       if (command === 'save') {
         handleSubmit();
+        return 'handled';
+      }
+      if (command === 'cancel') {
+        onCancel();
         return 'handled';
       }
       return 'not-handled';

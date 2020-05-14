@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import useSelectorTask from 'src/hooks/useSelectedTask';
 import Editor from 'src/containers/editor';
 import CommonAdd from 'src/components/common-add';
@@ -12,12 +12,25 @@ const Main: React.FC = () => {
   const tasks = useSelectorTask();
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const updateTaskStatus = useCallback(
     (id, completed) => {
       dispatch(updateTask({ id, completed }));
     },
     [tasks],
   );
+
+  useEffect(() => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.keyCode === 27) {
+        setShowInput(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeydown);
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, []);
   return (
     <div className="main">
       <header className="main-header">
@@ -34,6 +47,7 @@ const Main: React.FC = () => {
           className="add-task"
           style={{ paddingLeft: 0 }}
           onClick={() => {
+            history.push(location.pathname);
             setShowInput(true);
           }}
         />
@@ -42,7 +56,6 @@ const Main: React.FC = () => {
         <Editor
           onSubmit={({ title, projectId }) => {
             dispatch(addTask({ title, projectId }));
-            setShowInput(false);
           }}
           onCancel={() => setShowInput(false)}
         />

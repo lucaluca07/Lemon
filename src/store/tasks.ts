@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RawDraftContentState } from 'draft-js';
 
 interface BaseTask {
   id: string;
@@ -7,6 +8,7 @@ interface BaseTask {
   completed: boolean;
   projectId: string;
   tags?: string[];
+  content?: RawDraftContentState;
 }
 
 export interface TaskState {
