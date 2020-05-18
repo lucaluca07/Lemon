@@ -4,9 +4,10 @@ import { RawDraftContentState } from 'draft-js';
 interface BaseTask {
   id: string;
   title: string;
-  date?: number;
-  completed: boolean;
   projectId: string;
+  completed: boolean;
+  deleted: boolean;
+  date?: number;
   tags?: string[];
   content?: RawDraftContentState;
 }
@@ -21,6 +22,7 @@ const initialState: TaskState = {
     title: '测试 task' + item,
     completed: false,
     projectId: 'inbox',
+    deleted: false,
   })),
 };
 
@@ -35,6 +37,7 @@ const tasksSlice = createSlice({
         title,
         projectId,
         completed: false,
+        deleted: false,
       });
     },
     updateTask(state, action) {
@@ -46,8 +49,10 @@ const tasksSlice = createSlice({
       }
     },
     deleteTask(state, action) {
-      const tasks = state.tasks.filter((task) => task.id !== action.payload);
-      state.tasks = tasks;
+      const task = state.tasks.find((task) => task.id === action.payload);
+      if (task) {
+        task.deleted = true;
+      }
     },
   },
 });

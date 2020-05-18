@@ -13,7 +13,9 @@ const useSelectorTask = () => {
     const path = params[1];
     if (projects.includes(path)) {
       const projectId = path === 'inbox' ? 'inbox' : params[2];
-      return tasks.filter((task) => task.projectId === projectId);
+      return tasks.filter(
+        (task) => task.projectId === projectId && !task.deleted,
+      );
     }
     return tasks;
   }, [location.pathname, tasks]);

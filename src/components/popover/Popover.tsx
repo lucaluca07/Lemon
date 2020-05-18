@@ -106,12 +106,20 @@ const Example: React.FC<IProps> = ({
     setVisible(false);
   }, [children, popperRef.current, trigger]);
 
-  const handleClickPopover = useCallback(() => {
-    const popperElement = popperRef.current;
-    if (!clickContentHide || !popperElement) return;
-    popperElement.removeAttribute('data-show');
-    setVisible(false);
-  }, [clickContentHide, popperRef.current]);
+  const handleClickPopover = useCallback(
+    (e) => {
+      const popperElement = popperRef.current;
+      const target = e.target as HTMLElement;
+      if (
+        !(clickContentHide || target.hasAttribute('data-popover-hide')) ||
+        !popperElement
+      )
+        return;
+      popperElement.removeAttribute('data-show');
+      setVisible(false);
+    },
+    [clickContentHide, popperRef.current],
+  );
 
   const childNode = useMemo(() => {
     const child = React.Children.only(children) as React.ReactElement;
