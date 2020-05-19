@@ -1,18 +1,19 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useSelectorTask from 'src/hooks/useSelectedTask';
 import Editor from 'src/containers/editor';
 import CommonAdd from 'src/components/common-add';
 import Tasks from 'src/components/tasks';
 import { addTask, updateTask } from 'src/store/tasks';
+import usePathname from 'src/hooks/usePathname';
 
 const Main: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
   const tasks = useSelectorTask();
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const pathname = usePathname();
   const updateTaskStatus = useCallback(
     (id, completed) => {
       dispatch(updateTask({ id, completed }));
@@ -38,7 +39,7 @@ const Main: React.FC = () => {
       </header>
       <Tasks
         tasks={tasks}
-        onClick={(id: string) => history.push(`?taskId=${id}`)}
+        onClick={(id: string) => history.push(`${pathname}/${id}`)}
         updateTaskStatus={updateTaskStatus}
       />
       {!showInput && (
@@ -47,7 +48,7 @@ const Main: React.FC = () => {
           className="add-task"
           style={{ paddingLeft: 0 }}
           onClick={() => {
-            history.push(location.pathname);
+            history.push(pathname);
             setShowInput(true);
           }}
         />

@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RawDraftContentState } from 'draft-js';
 
+interface SubTask {
+  id: string;
+  title: string;
+  status: 1 | 2 | 3 | 4; // 1 未完成 2 已完成 3 已过期 4 已删除
+}
+
 interface BaseTask {
   id: string;
   title: string;
@@ -10,6 +16,7 @@ interface BaseTask {
   date?: number;
   tags?: string[];
   content?: RawDraftContentState;
+  items?: SubTask[];
 }
 
 export interface TaskState {

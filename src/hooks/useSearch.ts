@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 
 const useSearch = () => {
   const location = useLocation();
-
   return useMemo(() => {
     const search = location.search;
     let params: { [key: string]: string } = {};

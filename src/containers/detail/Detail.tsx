@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import classnames from 'classnames';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import useSearch from 'src/hooks/useSearch';
 import { RootState } from 'src/store/reducer';
@@ -17,7 +17,7 @@ import Projects from 'src/containers/editor/Projects';
 const Detail: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { taskId } = useSearch();
+  const { taskId } = useParams();
   const { tasks } = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const task = useMemo(() => {
