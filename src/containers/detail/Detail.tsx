@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import classnames from 'classnames';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,8 +13,10 @@ import Button from 'src/components/button';
 import Popover from 'src/components/popover';
 import Popconfirm from 'src/components/popconfirm';
 import Projects from 'src/containers/editor/Projects';
+import SubTasks from './SubTasks';
 
 const Detail: React.FC = () => {
+  const [showInput, setShowInput] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const { taskId } = useParams();
@@ -57,6 +59,18 @@ const Detail: React.FC = () => {
     [taskId],
   );
 
+  const updateTaskItem = useCallback(
+    (items) => {
+      dispatch(
+        updateTask({
+          id: taskId,
+          items,
+        }),
+      );
+    },
+    [taskId],
+  );
+
   return (
     <div className={classnames('detail', { 'detail-hide': !taskId })}>
       {taskId && (
@@ -78,16 +92,10 @@ const Detail: React.FC = () => {
             <div>时间 标签</div>
           </div>
           <div className="detail-body">
-            <div className="detail-sub-tasks">
-              <CommonAdd
-                name="添加子任务"
-                className="add-task"
-                style={{ paddingLeft: 0 }}
-                onClick={() => {
-                  // setShowInput(true);
-                }}
-              />
-            </div>
+            <SubTasks
+              items={task!.items || []}
+              updateTaskItem={updateTaskItem}
+            />
             <div className="detail-content">
               <MDEditor
                 onChange={handleChangeContent}
