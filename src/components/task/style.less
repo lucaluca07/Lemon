@@ -1,25 +1,33 @@
 .task {
   list-style: none;
   position: relative;
+  margin: 0 16px;
   &-details {
-    display: flex;
-    padding: 10px 0;
     font-size: 14px;
-    border-bottom: 1px solid #f0f0f0;
     line-height: 21px;
-    align-items: center;
+    padding: 0 12px;
+    &-inner {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+    }
+    &:hover {
+      background-color: #fafafa;
+    }
   }
+
   &-drag {
     position: absolute;
-    height: 24px;
-    width: 24px;
-    left: -24px;
+    height: 14px;
+    width: 14px;
+    left: -16px;
     top: 50%;
     transform: translateY(-50%);
-    padding: 4px;
     cursor: move;
     .iconfont {
       display: none;
+      font-size: 14px;
     }
   }
   &-title {
@@ -29,5 +37,8 @@
     .task-drag .iconfont {
       display: block;
     }
+  }
+  &-selected {
+    background: #fafafa;
   }
 }

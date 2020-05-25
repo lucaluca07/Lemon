@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import useSelectorTask from 'src/hooks/useSelectedTask';
 import Editor from 'src/containers/editor';
 import CommonAdd from 'src/components/common-add';
@@ -21,6 +21,8 @@ const Main: React.FC = () => {
     [tasks],
   );
 
+  const { taskId } = useParams();
+
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.keyCode === 27) {
@@ -38,6 +40,7 @@ const Main: React.FC = () => {
         <h1>test</h1>
       </header>
       <Tasks
+        selectedKey={taskId}
         tasks={tasks}
         onClick={(id: string) => history.push(`${pathname}/${id}`)}
         updateTaskStatus={updateTaskStatus}
@@ -48,7 +51,6 @@ const Main: React.FC = () => {
           className="add-task"
           style={{ paddingLeft: 0 }}
           onClick={() => {
-            history.push(pathname);
             setShowInput(true);
           }}
         />

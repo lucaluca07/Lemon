@@ -1,8 +1,7 @@
 import React, { useMemo, useCallback, useState } from 'react';
 import classnames from 'classnames';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import useSearch from 'src/hooks/useSearch';
 import { RootState } from 'src/store/reducer';
 import Checkbox from 'src/components/checkbox';
 import CommonAdd from 'src/components/common-add';
@@ -14,11 +13,12 @@ import Popover from 'src/components/popover';
 import Popconfirm from 'src/components/popconfirm';
 import Projects from 'src/containers/editor/Projects';
 import SubTasks from './SubTasks';
+import usePathname from 'src/hooks/usePathname';
 
 const Detail: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
   const history = useHistory();
-  const location = useLocation();
+  const pathname = usePathname();
   const { taskId } = useParams();
   const { tasks } = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const Detail: React.FC = () => {
 
   const handleDeleteTask = useCallback(() => {
     dispatch(deleteTask(taskId));
-    history.push(location.pathname);
+    history.push(pathname);
   }, [taskId]);
 
   const updateTaskStatus = useCallback(

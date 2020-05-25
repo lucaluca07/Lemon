@@ -9,7 +9,7 @@ const routes: IRoute[] = [
   { path: '/inbox/:taskId?', component: 'tasks' },
   { path: '/today/:taskId', component: 'tasks' },
   { path: '/week/:taskId', component: 'tasks' },
-  { path: '/calendar', component: 'tasks' },
+  { path: '/calendar', component: 'calendar' },
   { path: '/project/:projectId/:taskId?', component: 'tasks' },
 ];
 
