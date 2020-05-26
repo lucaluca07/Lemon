@@ -3,7 +3,7 @@ import Calendar from 'src/components/calendar';
 
 const CalendarView: React.FC = () => {
   return (
-    <div>
+    <div style={{ padding: 16 }}>
       <Calendar />
     </div>
   );
