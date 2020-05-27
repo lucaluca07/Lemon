@@ -13,6 +13,8 @@ interface IProps {
   trigger?: 'click' | 'focus';
   style?: React.CSSProperties;
   clickContentHide?: boolean;
+  afterVisible?: () => void;
+  afterHidden?: () => void;
 }
 
 const Example: React.FC<IProps> = ({
@@ -21,10 +23,50 @@ const Example: React.FC<IProps> = ({
   trigger = 'click',
   style,
   clickContentHide,
+  afterVisible,
+  afterHidden,
 }) => {
   const [visible, setVisible] = useState(false);
   const popperRef = useRef<HTMLDivElement>(null);
   const instanceRef = useRef<{ instance: Instance | null }>({ instance: null });
+
+  const showPopper = useCallback(() => {
+    const popperElement = popperRef.current;
+    if (popperElement) {
+      popperElement.setAttribute('data-popover-visible', 'visible');
+      setVisible(true);
+    }
+  }, []);
+
+  const hidePopper = useCallback(() => {
+    const popperElement = popperRef.current;
+    if (popperElement) {
+      popperElement.removeAttribute('data-popover-visible');
+      setVisible(false);
+    }
+  }, []);
+
+  const initPopper = useCallback(
+    (referenceElement, popperElement) => {
+      if (!instanceRef.current.instance) {
+        instanceRef.current.instance = createPopper(
+          referenceElement,
+          popperElement,
+          {
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, 4],
+                },
+              },
+            ],
+          },
+        );
+      }
+    },
+    [instanceRef.current],
+  );
 
   const onClick = useCallback(
     (event) => {
@@ -32,79 +74,35 @@ const Example: React.FC<IProps> = ({
       const referenceElement = event.currentTarget;
       const popperElement = popperRef.current;
       if (!popperElement) return;
-      if (!instanceRef.current.instance) {
-        instanceRef.current.instance = createPopper(
-          referenceElement,
-          popperElement,
-          {
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, 4],
-                },
-              },
-            ],
-          },
-        );
-      }
-      if (popperElement.getAttribute('data-show')) {
-        popperElement.removeAttribute('data-show');
-        setVisible(false);
+      initPopper(referenceElement, popperElement);
+      if (popperElement.hasAttribute('data-popover-visible')) {
+        hidePopper();
       } else {
-        popperElement.setAttribute('data-show', 'visible');
-        setVisible(true);
+        showPopper();
       }
     },
     [children, popperRef.current, trigger],
   );
 
-  useEffect(() => {
-    window.addEventListener('mousedown', (e) => {
-      const popperElement = popperRef.current;
-      if (!popperElement) return;
-      const node = e.target as HTMLElement;
-      if (!popperElement.contains(node)) {
-        popperElement.removeAttribute('data-show');
-      }
-    });
-  }, [popperRef.current]);
-
   const onFocus = useCallback(
     (event) => {
-      if (trigger !== 'focus') return;
       const referenceElement = event.currentTarget;
       const popperElement = popperRef.current;
-      if (!popperElement) return;
-      if (!instanceRef.current.instance) {
-        instanceRef.current.instance = createPopper(
-          referenceElement,
-          popperElement,
-          {
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, 4],
-                },
-              },
-            ],
-          },
-        );
-      }
-      popperElement.setAttribute('data-show', 'visible');
-      setVisible(true);
+      if (trigger !== 'focus' || !popperElement) return;
+      initPopper(referenceElement, popperElement);
+      showPopper();
     },
     [children, popperRef.current, trigger],
   );
 
   const onBlur = useCallback(() => {
     if (trigger !== 'focus') return;
-    const popperElement = popperRef.current;
-    if (!popperElement) return;
-    popperElement.removeAttribute('data-show');
-    setVisible(false);
+    hidePopper();
   }, [children, popperRef.current, trigger]);
+
+  const onMouseDown = useCallback((e) => {
+    e.stopPropagation();
+  }, []);
 
   const handleClickPopover = useCallback(
     (e) => {
@@ -113,18 +111,37 @@ const Example: React.FC<IProps> = ({
       if (
         !(clickContentHide || target.hasAttribute('data-popover-hide')) ||
         !popperElement
-      )
+      ) {
         return;
-      popperElement.removeAttribute('data-show');
-      setVisible(false);
+      }
+      hidePopper();
     },
     [clickContentHide, popperRef.current],
   );
 
+  useEffect(() => {
+    if (visible) {
+      afterVisible?.();
+    } else {
+      afterHidden?.();
+    }
+  }, [visible]);
+
   const childNode = useMemo(() => {
     const child = React.Children.only(children) as React.ReactElement;
-    return React.cloneElement(child, { onClick, onFocus, onBlur });
-  }, [onClick, children]);
+    return React.cloneElement(child, { onClick, onFocus, onBlur, onMouseDown });
+  }, [onClick, onFocus, onBlur, onMouseDown, children]);
+
+  useEffect(() => {
+    window.addEventListener('mousedown', (e) => {
+      const popperElement = popperRef.current;
+      if (!popperElement) return;
+      const node = e.target as HTMLElement;
+      if (!popperElement.contains(node)) {
+        hidePopper();
+      }
+    });
+  }, [popperRef.current]);
 
   return (
     <>

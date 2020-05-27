@@ -1,8 +1,9 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import Icon from 'src/components/icon';
 import classNames from 'classnames';
-import Popover from 'src/components/popover';
+import Select from 'src/components/select';
 
 interface IProps {
   onChange?: (date: dayjs.Dayjs) => void;
@@ -10,19 +11,21 @@ interface IProps {
   type?: 'card' | 'fullScreen';
 }
 
+dayjs.extend(advancedFormat);
+
 const today = dayjs(Date.now());
 const weeks = ['一', '二', '三', '四', '五', '六', '日'];
 const currentYear = today.get('year');
 const startYear = currentYear - 10;
 const endYear = currentYear + 9;
-const years: number[] = [];
+const years: { label: string; value: string }[] = [];
 for (let i = startYear; i <= endYear; i++) {
-  years.push(i);
+  years.push({ label: String(i) + '年', value: String(i) });
 }
 
 const months = Array(12)
   .fill('')
-  .map((item, i) => i + 1);
+  .map((item, i) => ({ label: String(i + 1) + '月', value: String(i + 1) }));
 
 const getDays = (date: dayjs.Dayjs) => {
   const monthStart: dayjs.Dayjs = date.startOf('month');
@@ -49,43 +52,6 @@ const Calendar: React.FC<IProps> = ({ date, type, onChange }) => {
     return getDays(current);
   }, [current]);
 
-  const yearContent = useMemo(() => {
-    return (
-      <ul className={classNames('calendar-list', `calendar-${type}-list`)}>
-        {years.map((item) => (
-          <li
-            onClick={() => setCurrent(current.year(item))}
-            className={classNames('calendar-list-item', {
-              'calendar-list-item-selected': current.get('year') === item,
-            })}
-            data-popover-hide
-            key={item}
-          >
-            {item}年
-          </li>
-        ))}
-      </ul>
-    );
-  }, [current, type]);
-  const monthContent = useMemo(() => {
-    return (
-      <ul className={classNames('calendar-list', `calendar-${type}-list`)}>
-        {months.map((item) => (
-          <li
-            onClick={() => setCurrent(current.month(item - 1))}
-            className={classNames('calendar-list-item', {
-              'calendar-list-item-selected': current.get('month') + 1 === item,
-            })}
-            data-popover-hide
-            key={item}
-          >
-            {item}月
-          </li>
-        ))}
-      </ul>
-    );
-  }, [current, type]);
-
   const handleSetSelectedChange = useCallback(
     (date: dayjs.Dayjs) => {
       setSelected(date);
@@ -97,12 +63,20 @@ const Calendar: React.FC<IProps> = ({ date, type, onChange }) => {
     <div className={classNames('calendar', `calendar-${type}`)}>
       <header className="calendar-header">
         <div className="calendar-header-left">
-          <Popover style={{ padding: 0 }} content={yearContent}>
-            <span>{current.get('year')}年</span>
-          </Popover>
-          <Popover style={{ padding: 0 }} content={monthContent}>
-            <span>{current.get('month') + 1}月</span>
-          </Popover>
+          <Select
+            data={years}
+            value={String(current.get('year'))}
+            onChange={(value: string) =>
+              setCurrent(current.year(Number(value)))
+            }
+          />
+          <Select
+            data={months}
+            value={String(current.get('month') + 1)}
+            onChange={(value: string) =>
+              setCurrent(current.month(Number(value) - 1))
+            }
+          />
         </div>
         <div className="calendar-header-right">
           <Icon

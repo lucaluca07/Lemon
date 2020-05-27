@@ -12,8 +12,10 @@ import Button from 'src/components/button';
 import Popover from 'src/components/popover';
 import Popconfirm from 'src/components/popconfirm';
 import Projects from 'src/containers/editor/Projects';
+import DatePicker from 'src/components/date-picker';
 import SubTasks from './SubTasks';
 import usePathname from 'src/hooks/usePathname';
+import Tags from 'src/components/tags';
 
 const Detail: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
@@ -59,6 +61,13 @@ const Detail: React.FC = () => {
     [taskId],
   );
 
+  const updateTaskDate = useCallback(
+    (date) => {
+      dispatch(updateTask({ id: taskId, date: Number(date.format('x')) }));
+    },
+    [taskId],
+  );
+
   const updateTaskItem = useCallback(
     (items) => {
       dispatch(
@@ -89,7 +98,10 @@ const Detail: React.FC = () => {
                 value={task!.title}
               />
             </div>
-            <div>时间 标签</div>
+            <div className="">
+              <DatePicker value={task?.date} onChange={updateTaskDate} />
+              <Tags />
+            </div>
           </div>
           <div className="detail-body">
             <SubTasks
