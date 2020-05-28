@@ -14,12 +14,10 @@ const Main: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const pathname = usePathname();
-  const updateTaskStatus = useCallback(
-    (id, completed) => {
-      dispatch(updateTask({ id, completed }));
-    },
-    [tasks],
-  );
+
+  const updateTaskStatus = useCallback((id, completed) => {
+    dispatch(updateTask({ id, completed }));
+  }, []);
 
   const { taskId } = useParams();
 

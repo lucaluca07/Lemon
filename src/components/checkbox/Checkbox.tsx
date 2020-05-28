@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 interface IProps {
   onChange?: (checked: boolean) => void;
@@ -7,7 +8,7 @@ interface IProps {
 
 const Checkbox: React.FC<IProps> = ({ onChange, checked }) => {
   return (
-    <label className="checkbox">
+    <label className={classNames('checkbox', { 'checkbox-checked': checked })}>
       <span className="checkbox-inner" />
       <input
         checked={checked}
