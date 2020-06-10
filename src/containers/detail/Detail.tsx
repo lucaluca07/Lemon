@@ -16,6 +16,7 @@ import DatePicker from 'src/components/date-picker';
 import SubTasks from './SubTasks';
 import usePathname from 'src/hooks/usePathname';
 import Tags from 'src/components/tags';
+import { addTag } from 'src/store/tags';
 
 const Detail: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
@@ -23,10 +24,16 @@ const Detail: React.FC = () => {
   const pathname = usePathname();
   const { taskId } = useParams();
   const { tasks } = useSelector((state: RootState) => state.tasks);
+  const tags = useSelector((state: RootState) => state.tags);
   const dispatch = useDispatch();
   const task = useMemo(() => {
-    return tasks?.find((task) => task.id === taskId);
+    return tasks.find((task) => task.id === taskId);
   }, [taskId, tasks]);
+  const taskTags = useMemo(() => {
+    return (
+      task?.tags?.map((tag) => tags.find((item) => item.id === tag)) || []
+    ).filter((item) => item !== undefined);
+  }, [task?.tags, tags]);
 
   const handleChangeContent = useCallback(
     (content: RawDraftContentState) => {
@@ -80,6 +87,29 @@ const Detail: React.FC = () => {
     [taskId],
   );
 
+  const handleAddTag = useCallback(
+    (tag) => {
+      if (taskTags.find((item) => item!.tag === tag)) return;
+      const currentTag = tags.find((item) => item.tag === tag);
+      let id = String(Date.now());
+      if (currentTag) {
+        id = currentTag.id;
+      } else {
+        dispatch(addTag({ id, tag }));
+      }
+      dispatch(updateTask({ id: taskId, tags: [...(task?.tags || []), id] }));
+    },
+    [taskId, taskTags],
+  );
+
+  const handleDeleteTag = useCallback(
+    (tagId) => {
+      const tags = task?.tags?.filter((item) => item !== tagId);
+      dispatch(updateTask({ id: taskId, tags }));
+    },
+    [taskId, taskTags],
+  );
+
   return (
     <div className={classnames('detail', { 'detail-hide': !taskId })}>
       {taskId && (
@@ -100,7 +130,11 @@ const Detail: React.FC = () => {
             </div>
             <div className="">
               <DatePicker value={task?.date} onChange={updateTaskDate} />
-              <Tags />
+              <Tags
+                onDeleteTag={handleDeleteTag}
+                tags={taskTags as []}
+                onAddTag={handleAddTag}
+              />
             </div>
           </div>
           <div className="detail-body">

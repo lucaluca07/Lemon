@@ -1,4 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import classNames from 'classnames';
 
 interface IProps {
   onEnter?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -7,7 +8,7 @@ interface IProps {
 const Input = forwardRef<
   { focus?: () => void; blur?: () => void },
   React.InputHTMLAttributes<any> & IProps
->(({ onEnter, ...props }, ref) => {
+>(({ onEnter, className, ...props }, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useImperativeHandle(
@@ -27,9 +28,8 @@ const Input = forwardRef<
     <input
       style={props.style}
       ref={inputRef}
-      className="input"
+      className={classNames('input', className)}
       onKeyDown={(e) => {
-        console.log(e.keyCode);
         if (e.keyCode === 13) {
           onEnter?.(e);
         }
