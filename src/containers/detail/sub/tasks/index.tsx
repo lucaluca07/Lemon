@@ -34,7 +34,7 @@ const SubTasks: React.FC<IProps> = ({ updateTaskItem, items = [] }) => {
             <Checkbox />
             <span className="detail-sub-task-title">{item.title}</span>
             <i
-              className="iconfont icon-delete_fill"
+              className="iconfont icon-delete"
               onClick={() => {
                 updateTaskItem(items.filter((el) => item.id !== el.id));
               }}

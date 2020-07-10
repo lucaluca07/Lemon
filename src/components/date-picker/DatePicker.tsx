@@ -12,6 +12,24 @@ interface IProps {
   renderLabel?: (label: Dayjs | undefined) => string;
 }
 
+const weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+const getDate = (date: Dayjs) => {
+  const now = dayjs();
+  const isSameYear = date.year() - now.year() === 0;
+  const diffDays = date.date() - now.date();
+  if (diffDays === 0) {
+    return '今天';
+  } else if (diffDays === 1) {
+    return '明天';
+  }
+  if (isSameYear) {
+    return `${date.format('MM月DD日')} ${weeks[date.get('day')]}`;
+  } else {
+    return date.format('YYYY年MM月DD日');
+  }
+};
+
 const defaultRenderLabel = (date: Dayjs | undefined) => (
   <div className="date-picker-render-label">
     {date === undefined ? (
@@ -21,8 +39,8 @@ const defaultRenderLabel = (date: Dayjs | undefined) => (
       </>
     ) : (
       <>
-        <Icon type={`calendar-${date.get('day') + 1}`} />
-        <span>{date.format('YYYY/MM/DD')}</span>
+        <Icon type={`calendar-${date.get('date')}`} />
+        <span className="date-picker-render-content">{getDate(date)}</span>
       </>
     )}
   </div>
@@ -45,6 +63,7 @@ const DatePicker: React.FC<IProps> = ({
     if (!date) return;
     onChange(date);
   }, [onChange, date]);
+
   const handleCancel = useCallback(() => {
     setDate(
       value === undefined
@@ -54,17 +73,13 @@ const DatePicker: React.FC<IProps> = ({
         : dayjs(value),
     );
   }, [value]);
+
   const content = useMemo(() => {
     return (
       <div className="date-picker">
         <Calendar onChange={setDate} type="card" date={date} />
         <div className="date-picker-footer">
-          <Button
-            onClick={handleCancel}
-            data-popover-hide
-            style={{ marginRight: 4 }}
-            size="small"
-          >
+          <Button data-popover-hide style={{ marginRight: 4 }} size="small">
             取消
           </Button>
           <Button
@@ -82,7 +97,11 @@ const DatePicker: React.FC<IProps> = ({
   }, [onChange, date]);
 
   return (
-    <Popover style={{ padding: 0 }} content={content}>
+    <Popover
+      style={{ padding: 0 }}
+      afterHidden={handleCancel}
+      content={content}
+    >
       <div className="date-picker-render">{renderLabel(date)}</div>
     </Popover>
   );

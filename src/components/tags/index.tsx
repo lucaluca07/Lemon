@@ -32,7 +32,6 @@ const Tags: React.FC<IProps> = ({ tags = [], onAddTag, onDeleteTag }) => {
           onClick={() => {
             setVisible(true);
           }}
-          type="primary"
           style={{ fontWeight: 500, fontSize: 12 }}
         >
           新增标签

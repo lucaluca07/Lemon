@@ -1,6 +1,6 @@
 .detail {
   width: 36%;
-  transition: all 0.3s;
+  transition: all 0.3s linear;
   background: #fff;
   border-left: 1px solid #eaeaea;
   display: flex;
@@ -14,11 +14,20 @@
   &-hide {
     width: 0px;
     transform: translateX(100%);
+    opacity: 0.5;
+  }
+
+  &-filter {
+    filter: blur(1px);
   }
 
   &-header {
-    padding: 16px;
-    border-bottom: 1px solid #eaeaea;
+    padding: 16px 12px 0;
+  }
+
+  &-info {
+    display: flex;
+    align-items: center;
   }
 
   &-body {
@@ -28,9 +37,14 @@
     padding: 0 12px;
   }
 
+  &-content {
+    margin-top: 8px;
+  }
+
   &-title {
     display: flex;
     align-items: center;
+    margin-bottom: 6px;
     .checkbox {
       margin-right: 8px;
     }
@@ -45,7 +59,7 @@
   &-footer {
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 12px;
     min-height: 38px;
     justify-content: space-between;
     border-top: 1px solid #eaeaea;
@@ -54,12 +68,16 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    line-height: 1.2;
     li {
       display: flex;
       align-items: center;
       margin: 8px 0;
       .iconfont {
         color: #999;
+        &:hover {
+          color: #666;
+        }
       }
     }
   }
